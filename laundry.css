@@ -19,11 +19,12 @@
      11. Modal: Sukses Booking
      12. State Login Navbar (User Info)
      13. Responsive / Media Queries
+     14. lanjutan booking
 ================================================================ */
 
 
 /* ================================================================
-   1. RESET & VARIABEL CSS
+   1. RESET & VARIABEL CSS nashwa
 ================================================================ */
 * {
   box-sizing: border-box;
@@ -441,7 +442,7 @@ nav {
 
 
 /* ================================================================
-   6. HALAMAN: PAKET & LAYANAN
+   6. HALAMAN: PAKET & LAYANAN arya satya
 ================================================================ */
 #page-packages .pkg-hero {
   background: var(--green-pale);
@@ -596,7 +597,7 @@ nav {
 
 
 /* ================================================================
-   7. HALAMAN: DETAIL PAKET
+   7. HALAMAN: DETAIL PAKET ananda
 ================================================================ */
 #page-detail .detail-hero {
   background: var(--green);
@@ -788,7 +789,7 @@ nav {
 
 
 /* ================================================================
-   8. HALAMAN: BOOKING
+   8. HALAMAN: BOOKING reza, css reza buat booking masih ado dibawah nomor 11,14
 ================================================================ */
 #page-booking .book-hero {
   background: var(--green-pale);
@@ -817,11 +818,8 @@ nav {
   padding: 3rem 2rem;
 }
 
-/* .form-card, .form-row, .form-group sudah ada di CSS BOOKING BARU (bawah) */
-
-
 /* ================================================================
-   9. HALAMAN: TRACKING
+   9. HALAMAN: TRACKING moses
 ================================================================ */
 #page-tracking .track-hero {
   background: var(--dark);
@@ -992,7 +990,7 @@ nav {
 
 
 /* ================================================================
-   10. MODAL: LOGIN & REGISTER
+   10. MODAL: LOGIN & REGISTER modal ini bentukan login dan register, untuk febri cssny masi ado dibawah
 ================================================================ */
 .modal-overlay {
   position: fixed;
@@ -1198,7 +1196,7 @@ nav {
 
 
 /* ================================================================
-   11. MODAL: SUKSES BOOKING
+   11. MODAL: SUKSES BOOKING reza
 ================================================================ */
 .success-overlay {
   position: fixed;
@@ -1278,7 +1276,7 @@ nav {
 
 
 /* ================================================================
-   12. STATE LOGIN NAVBAR — Info User (setelah berhasil login)
+   12. STATE LOGIN NAVBAR — Info User (setelah berhasil login) febri
 ================================================================ */
 .user-info {
   display: flex;
@@ -1347,7 +1345,7 @@ nav {
 }
 
 /* ================================================================
-   BOOKING BARU — Multi-paket, Diskon, Pembayaran, WA
+ 14.  BOOKING BARU — Multi-paket, Diskon, Pembayaran, WA reza
 ================================================================ */
 
 /* Layout 2 kolom booking */

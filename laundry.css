@@ -1,0 +1,1589 @@
+/* ================================================================
+   FRESHWAVE LAUNDRY — STYLESHEET
+   Struktur:
+     1.  Reset & Variabel CSS
+     2.  Base & Body
+     3.  Navigasi
+     4.  Sistem Halaman (page switching)
+     5.  Halaman: Beranda
+         5a. Hero Section
+         5b. Stats Bar
+         5c. Section Wrapper & Keunggulan
+         5d. Promo Banner
+         5e. Testimoni
+     6.  Halaman: Paket & Layanan
+     7.  Halaman: Detail Paket
+     8.  Halaman: Booking
+     9.  Halaman: Tracking
+     10. Modal: Login & Register
+     11. Modal: Sukses Booking
+     12. State Login Navbar (User Info)
+     13. Responsive / Media Queries
+================================================================ */
+
+
+/* ================================================================
+   1. RESET & VARIABEL CSS
+================================================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Warna Utama */
+  --green:       #1b5e45;
+  --green-mid:   #2d7a5e;
+  --green-light: #e6f4ef;
+  --green-pale:  #f2faf6;
+
+  /* Aksen Emas */
+  --gold:        #c9963a;
+  --gold-light:  #fdf5e6;
+
+  /* Teks & UI */
+  --dark:   #141414;
+  --mid:    #555;
+  --muted:  #888;
+  --border: #e0e0e0;
+  --white:  #fff;
+  --bg:     #f8f8f5;
+}
+
+
+/* ================================================================
+   2. BASE & BODY
+================================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* ================================================================
+   3. NAVIGASI
+================================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: -0.02em;
+  cursor: pointer;
+}
+
+.nav-brand span {
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--mid);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+.nav-cta {
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-cta:hover {
+  background: var(--green-mid);
+  transform: translateY(-1px);
+}
+
+
+/* ================================================================
+   4. SISTEM HALAMAN (PAGE SWITCHING)
+   Semua halaman disembunyikan secara default.
+   Halaman aktif mendapat class "active" via JavaScript.
+================================================================ */
+.page {
+  display: none;
+  min-height: 100vh;
+  padding-top: 64px; /* tinggi navbar */
+}
+
+.page.active {
+  display: block;
+}
+
+/* Tombol & utilitas global yang dipakai di beberapa halaman */
+.btn-primary {
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background: #b8832e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 150, 58, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.btn-outline:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* ================================================================
+   5a. HALAMAN BERANDA — Hero Section
+================================================================ */
+#page-home .hero {
+  background: linear-gradient(135deg, #1b5e45 0%, #2d7a5e 50%, #1b5e45 100%);
+  padding: 7rem 2rem 5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#page-home .hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+#page-home .hero-badge {
+  display: inline-block;
+  background: rgba(201, 150, 58, 0.2);
+  border: 1px solid rgba(201, 150, 58, 0.5);
+  color: #f5c87a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#page-home .hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+
+#page-home .hero h1 em {
+  color: #f5c87a;
+  font-style: normal;
+}
+
+#page-home .hero p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative; /* Membuat elemen bisa diatur lapisannya */
+  z-index: 10;        /* Menaikkan tombol ke lapisan paling atas 
+                        agar tetap bisa diklik meski ada efek latar belakang */
+
+/* Pastikan juga tombol di dalamnya bisa diklik dengan lancar */
+.hero-btns button {
+    cursor: pointer;    /* Mengubah kursor menjadi bentuk tangan saat diarahkan */
+}
+}
+
+
+/* ================================================================
+   5b. HALAMAN BERANDA — Stats Bar
+================================================================ */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 1.5rem 2rem;
+}
+
+.stat-item {
+  padding: 0.5rem;
+}
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+
+/* ================================================================
+   5c. HALAMAN BERANDA — Section Wrapper & Keunggulan
+================================================================ */
+.section {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.section-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.25s;
+}
+
+.feature-card:hover {
+  border-color: var(--green);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(27, 94, 69, 0.1);
+}
+
+.feat-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--green-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+
+/* ================================================================
+   5d. HALAMAN BERANDA — Promo Banner
+================================================================ */
+.promo-banner {
+  background: linear-gradient(120deg, #1b5e45, #2d7a5e);
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 2rem 4rem;
+  flex-wrap: wrap;
+}
+
+.promo-banner h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.promo-banner p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+
+/* ================================================================
+   5e. HALAMAN BERANDA — Testimoni
+================================================================ */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.testi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.stars {
+  color: var(--gold);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.testi-text {
+  font-size: 0.875rem;
+  color: var(--mid);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.testi-author {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.testi-loc {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+
+/* ================================================================
+   6. HALAMAN: PAKET & LAYANAN
+================================================================ */
+#page-packages .pkg-hero {
+  background: var(--green-pale);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+#page-packages .pkg-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+#page-packages .pkg-hero p {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 300;
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pkg-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pkg-card:hover {
+  border-color: var(--green);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(27, 94, 69, 0.12);
+}
+
+/* Paket yang ditandai "terpopuler" */
+.pkg-card.popular {
+  border-color: var(--gold);
+}
+
+.pkg-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--gold);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pkg-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.pkg-icon.green { background: var(--green-light); }
+.pkg-icon.gold  { background: var(--gold-light); }
+
+.pkg-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.pkg-tagline {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  font-weight: 300;
+}
+
+.pkg-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.25rem;
+}
+
+.pkg-price span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.pkg-features {
+  list-style: none;
+  margin: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pkg-features li {
+  font-size: 0.85rem;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
+
+.pkg-features li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.pkg-btn {
+  width: 100%;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1.5rem;
+}
+
+.pkg-btn:hover       { background: var(--green-mid); }
+.pkg-btn.gold-btn    { background: var(--gold); }
+.pkg-btn.gold-btn:hover { background: #b8832e; }
+
+
+/* ================================================================
+   7. HALAMAN: DETAIL PAKET
+================================================================ */
+#page-detail .detail-hero {
+  background: var(--green);
+  padding: 4rem 2rem;
+  color: var(--white);
+}
+
+#page-detail .detail-hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.detail-tag {
+  background: rgba(201, 150, 58, 0.25);
+  color: #f5c87a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+#page-detail .detail-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+#page-detail .detail-hero p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.detail-body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Kotak harga + tombol booking */
+.detail-price-box {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.big-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.big-price span {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Grid inklusi paket */
+.detail-includes {
+  margin-bottom: 2rem;
+}
+
+.detail-includes h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.include-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.include-item {
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.include-item .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.include-item p {
+  font-size: 0.875rem;
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.include-item span {
+  font-size: 0.775rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* Langkah-langkah proses */
+.process-steps {
+  margin-bottom: 2rem;
+}
+
+.process-steps h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.step:last-child {
+  border-bottom: none;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+}
+
+.step-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+
+/* ================================================================
+   8. HALAMAN: BOOKING
+================================================================ */
+#page-booking .book-hero {
+  background: var(--green-pale);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+#page-booking .book-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+#page-booking .book-hero p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin-top: 0.35rem;
+}
+
+.booking-form {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* .form-card, .form-row, .form-group sudah ada di CSS BOOKING BARU (bawah) */
+
+
+/* ================================================================
+   9. HALAMAN: TRACKING
+================================================================ */
+#page-tracking .track-hero {
+  background: var(--dark);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+#page-tracking .track-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+#page-tracking .track-hero p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+  font-weight: 300;
+}
+
+.track-search {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+}
+
+.track-input-wrap {
+  display: flex;
+  gap: 10px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 6px 6px 6px 16px;
+  align-items: center;
+}
+
+.track-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--dark);
+  background: transparent;
+}
+
+.track-input-wrap button {
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.track-result {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 2rem 3rem;
+}
+
+.track-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.track-header {
+  background: var(--green);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.track-id {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 4px;
+}
+
+.track-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+/* Badge status pesanan */
+.status-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.status-badge.done {
+  background: #2d9e6e;
+  color: var(--white);
+}
+
+/* Timeline tracking */
+.track-timeline {
+  padding: 2rem;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.tl-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* Titik timeline */
+.tl-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 2px var(--border);
+}
+
+.tl-dot.done   { background: var(--green); box-shadow: 0 0 0 2px rgba(27, 94, 69, 0.3); }
+.tl-dot.active { background: var(--gold);  box-shadow: 0 0 0 2px rgba(201, 150, 58, 0.3); }
+
+/* Garis penghubung timeline */
+.tl-line {
+  width: 2px;
+  background: var(--border);
+  flex: 1;
+  margin: 4px 0;
+}
+
+.tl-line.done {
+  background: var(--green);
+}
+
+.tl-content {
+  padding-bottom: 1.5rem;
+  flex: 1;
+}
+
+.tl-title       { font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 2px; }
+.tl-title.muted { color: var(--muted); }
+.tl-time        { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+.tl-note        { font-size: 0.8rem; color: var(--mid); margin-top: 4px; font-weight: 300; }
+
+
+/* ================================================================
+   10. MODAL: LOGIN & REGISTER
+================================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 24px;
+  width: 90%;
+  max-width: 440px;
+  overflow: hidden;
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Header modal (hijau dengan tab) */
+.modal-top {
+  background: var(--green);
+  padding: 2rem 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.modal-top h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.modal-top p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: var(--white);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Tab Masuk / Daftar */
+.modal-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 3px;
+  margin-top: 1rem;
+}
+
+.modal-tab {
+  flex: 1;
+  padding: 7px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.modal-tab.active {
+  background: var(--white);
+  color: var(--green);
+}
+
+/* Body modal (form) */
+.modal-body {
+  padding: 1.75rem 2rem 2rem;
+}
+
+.modal-form-group {
+  margin-bottom: 1rem;
+}
+
+.modal-form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--mid);
+  margin-bottom: 5px;
+}
+
+.modal-form-group input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: var(--dark);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.modal-form-group input:focus {
+  border-color: var(--green);
+}
+
+.modal-btn {
+  width: 100%;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.modal-btn:hover {
+  background: var(--green-mid);
+}
+
+/* Pemisah "atau" */
+.modal-divider {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.modal-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.modal-divider span {
+  background: var(--white);
+  padding: 0 10px;
+  position: relative;
+}
+
+/* Link ganti tab */
+.modal-switch {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.modal-switch a {
+  color: var(--green);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Pesan error validasi */
+.modal-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.modal-error.show {
+  display: block;
+}
+
+
+/* ================================================================
+   11. MODAL: SUKSES BOOKING
+================================================================ */
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.success-overlay.open {
+  display: flex;
+}
+
+.success-box {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  animation: modalIn 0.3s ease;
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1.25rem;
+}
+
+.success-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+
+.success-box p {
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.order-id {
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.875rem;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.success-box button {
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 13px 32px;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+
+/* ================================================================
+   12. STATE LOGIN NAVBAR — Info User (setelah berhasil login)
+================================================================ */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  border-color: var(--dark);
+  color: var(--dark);
+}
+
+
+/* ================================================================
+   13. RESPONSIVE — Media Queries
+================================================================ */
+@media (max-width: 768px) {
+  /* Grid menjadi 1 kolom di mobile */
+  .features-grid,
+  .packages-grid,
+  .testimonials  { grid-template-columns: 1fr; }
+
+  /* Stats bar 2 kolom di mobile */
+  .stats-bar     { grid-template-columns: repeat(2, 1fr); }
+
+  /* Form booking kolom tunggal */
+  .form-row      { grid-template-columns: 1fr; }
+
+  /* Detail inklusi kolom tunggal */
+  .include-grid  { grid-template-columns: 1fr; }
+
+  /* Nav lebih rapat di mobile */
+  .nav-links     { gap: 1rem; }
+  .nav-links a   { font-size: 0.78rem; }
+}
+
+/* ================================================================
+   BOOKING BARU — Multi-paket, Diskon, Pembayaran, WA
+================================================================ */
+
+/* Layout 2 kolom booking */
+.booking-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.booking-cols { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start; }
+
+/* Kartu form tiap bagian */
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Nomor + judul bagian */
+.form-section-head {
+  display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem;
+}
+.form-section-num {
+  width: 32px; height: 32px; background: var(--green);
+  color: var(--white); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.form-section-head h3 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+.form-section-head p  { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+/* Form row & group */
+.form-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--dark); margin-bottom: 6px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 10px 14px; font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem; color: var(--dark); background: var(--white);
+  outline: none; transition: border 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--green); }
+.form-group textarea { resize: vertical; height: 80px; }
+
+/* ── Checklist paket ── */
+.pkg-checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem; }
+
+/* Satu baris paket dalam checklist */
+.pkg-check-item {
+  border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: all 0.2s; background: var(--white);
+  user-select: none;
+}
+.pkg-check-item:hover  { border-color: var(--green); background: var(--green-light); }
+.pkg-check-item.active { border-color: var(--green); background: var(--green-light); }
+
+/* Checkbox visual custom */
+.pkg-checkbox {
+  width: 22px; height: 22px; border-radius: 6px;
+  border: 2px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; transition: all 0.2s;
+}
+.pkg-check-item.active .pkg-checkbox { background: var(--green); border-color: var(--green); color: var(--white); }
+
+.pkg-check-emoji  { font-size: 1.5rem; flex-shrink: 0; }
+.pkg-check-info   { flex: 1; }
+.pkg-check-name   { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+.pkg-check-price  { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+/* Input qty/berat per paket — muncul saat paket dicentang */
+.pkg-qty-wrap {
+  display: none; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.pkg-check-item.active .pkg-qty-wrap { display: flex; }
+.pkg-qty-input {
+  width: 80px; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem; text-align: center; outline: none;
+  transition: border 0.2s;
+}
+.pkg-qty-input:focus { border-color: var(--green); }
+.pkg-qty-unit { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+
+/* Tombol tambah paket */
+.add-pkg-btn {
+  width: 100%; padding: 10px; border: 1.5px dashed var(--border);
+  border-radius: 10px; background: transparent;
+  font-family: 'Outfit', sans-serif; font-size: 0.875rem;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+}
+.add-pkg-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+
+/* ── Opsi Pembayaran ── */
+.pay-options { display: flex; flex-direction: column; gap: 10px; }
+.pay-option  {
+  border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 14px 16px; cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.2s; background: var(--white);
+  user-select: none;
+}
+.pay-option:hover  { border-color: var(--green); background: var(--green-light); }
+.pay-option.active { border-color: var(--green); background: var(--green-light); }
+.pay-option input[type="radio"] { display: none; } /* sembunyikan radio asli */
+.pay-icon  { font-size: 1.5rem; flex-shrink: 0; }
+.pay-info  { flex: 1; }
+.pay-name  { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+.pay-desc  { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+.pay-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; transition: all 0.2s; flex-shrink: 0;
+}
+.pay-option.active .pay-check { background: var(--green); border-color: var(--green); color: var(--white); }
+.pay-option.active .pay-check::after { content: '✓'; }
+
+/* ── Kolom kanan: Summary sticky ── */
+.booking-right    { position: sticky; top: 80px; }
+
+.summary-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 20px; padding: 1.5rem; margin-bottom: 1rem;
+}
+.summary-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;
+}
+
+/* Daftar paket terpilih di summary */
+.summary-items  { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 8px; }
+.summary-empty  { font-size: 0.85rem; color: var(--muted); text-align: center; padding: 1rem; font-weight: 300; }
+
+/* Satu baris item di summary */
+.summary-item-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  font-size: 0.85rem; gap: 8px;
+}
+.si-name   { color: var(--dark); font-weight: 500; flex: 1; }
+.si-detail { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+.si-price  { color: var(--green); font-weight: 600; white-space: nowrap; }
+
+.summary-divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+.summary-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.875rem; padding: 4px 0; color: var(--mid);
+}
+.total-row { font-weight: 700; font-size: 1rem; color: var(--dark); margin-top: 4px; }
+.total-row span:last-child { color: var(--green); font-size: 1.1rem; }
+
+/* Baris diskon (hijau) */
+.discount-row { color: var(--green); }
+.discount-val { font-weight: 700; }
+
+/* Catatan estimasi */
+.summary-note {
+  margin-top: 12px; background: var(--green-light);
+  border-radius: 8px; padding: 10px 12px;
+  font-size: 0.8rem; color: var(--green-mid);
+}
+.summary-note strong { color: var(--green); }
+
+/* Badge diskon pengguna baru */
+.new-user-badge {
+  margin-top: 10px; background: var(--gold-light);
+  border: 1px solid var(--gold); border-radius: 10px;
+  padding: 10px 12px; font-size: 0.8rem;
+  color: #8a5a00; font-weight: 500; text-align: center;
+}
+
+/* Tombol konfirmasi WA */
+.wa-confirm-btn {
+  width: 100%; padding: 15px; border: none;
+  background: #25d366; color: var(--white);
+  border-radius: 14px; font-family: 'Outfit', sans-serif;
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s; box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+}
+.wa-confirm-btn:hover { background: #1cb858; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.45); }
+.wa-note { text-align: center; font-size: 0.78rem; color: var(--muted); margin-top: 8px; font-weight: 300; }
+
+/* ── Modal sukses + tombol buka WA ── */
+.success-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 300; display: none;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.success-overlay.open { display: flex; }
+.success-box {
+  background: var(--white); border-radius: 24px;
+  padding: 2.5rem 2rem; text-align: center;
+  max-width: 400px; width: 90%;
+  animation: modalIn 0.3s ease;
+}
+.success-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.success-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem;
+}
+.success-box p { color: var(--muted); font-size: 0.875rem; font-weight: 300; line-height: 1.6; margin-bottom: 1.25rem; }
+.order-id {
+  background: var(--green-light); border-radius: 10px;
+  padding: 10px; font-size: 0.875rem; color: var(--green);
+  font-weight: 600; margin-bottom: 1.25rem;
+}
+.wa-open-btn {
+  display: block; width: 100%; padding: 14px;
+  background: #25d366; color: var(--white);
+  border-radius: 12px; font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none; text-align: center; margin-bottom: 0;
+  transition: background 0.2s;
+}
+.wa-open-btn:hover { background: #1cb858; }
+
+/* ── Tracking: daftar paket multi ── */
+.tr-pkg-list {
+  margin-top: 8px; display: flex; flex-direction: column; gap: 4px;
+}
+.tr-pkg-item {
+  background: rgba(255,255,255,0.15); border-radius: 6px;
+  padding: 4px 10px; font-size: 0.8rem; color: rgba(255,255,255,0.9);
+  display: flex; align-items: center; gap: 6px;
+}
+.tr-pkg-item::before { content: '•'; opacity: 0.6; }
+
+/* ── Responsive booking baru ── */
+@media (max-width: 768px) {
+  .booking-cols  { grid-template-columns: 1fr; }
+  .booking-right { position: static; }
+  .form-row      { grid-template-columns: 1fr; }
+}

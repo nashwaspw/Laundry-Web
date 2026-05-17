@@ -1,5 +1,5 @@
 /* ================================================================
-   FRESHWAVE LAUNDRY — JAVASCRIPT GABUNGAN
+   FRESHWAVE LAUNDRY 
    File: laundry.js
 
    BAGIAN:
@@ -14,11 +14,13 @@
      9.  Tracking (update multi-paket)
      10. afterBooking()
      11. Inisialisasi
+
+     kalo ad salah penamaan bagian , ganti.
 ================================================================ */
 
 
 /* ================================================================
-   1. DATA PAKET
+   1. DATA PAKET arya satya, js kau masih ad dibawah
 ================================================================ */
 const packages = {
   basic:   { name:'Basic Wash',        price:'Rp 7.000/kg',       tag:'Paket Standar',   title:'Basic Wash',        sub:'Solusi ekonomis untuk cucian harian berkualitas',                          priceStr:'Rp 7.000 <span>/ kg</span>',       priceNum:7000,   unit:'kg',    emoji:'🧺' },
@@ -31,7 +33,7 @@ const packages = {
 
 
 /* ================================================================
-   2. STATE APLIKASI
+   2. STATE APLIKASI ghassan, febri, js kalian masih ad dibawh
 ================================================================ */
 let currentUser     = null;      /* null = belum login */
 let selectedPkg     = 'express'; /* paket terakhir diklik */
@@ -48,7 +50,7 @@ let userDatabase = [
 
 
 /* ================================================================
-   3. NAVIGASI HALAMAN
+   3. NAVIGASI HALAMAN nashwa
 ================================================================ */
 function goto(page) {
   const target = document.getElementById('page-' + page);
@@ -67,7 +69,7 @@ function goto(page) {
 
 
 /* ================================================================
-   4. HALAMAN PAKET
+   4. HALAMAN PAKET arya satya
 ================================================================ */
 function viewDetail(pkgId) {
   selectedPkg = pkgId;
@@ -99,7 +101,7 @@ function addToCart(pkgId) {
 
 
 /* ================================================================
-   5. BOOKING BARU
+   5. BOOKING BARU reza , js kau masih ado dibawah
 ================================================================ */
 
 /* 5a. Render daftar checklist paket */
@@ -331,7 +333,7 @@ function submitBooking() {
 
 
 /* ================================================================
-   6. MODAL LOGIN/REGISTER
+   6. MODAL LOGIN/REGISTER febri, ghsan
 ================================================================ */
 function openModal(tab) {
   tab = tab || 'login';
@@ -378,7 +380,7 @@ function validatePhoneFormat(phone) {
 
 
 /* ================================================================
-   7. LOGIN & REGISTER
+   7. LOGIN & REGISTER febri, ghsan, js febri masih ado dbwh
 ================================================================ */
 function doLogin() {
   const email = (document.getElementById('login-email')||{}).value||'';
@@ -481,7 +483,7 @@ function handlePromoClick() {
 
 
 /* ================================================================
-   8. LOGIN BERHASIL & LOGOUT
+   8. LOGIN BERHASIL & LOGOUT febri
 ================================================================ */
 function loginSuccess(user) {
   currentUser = user;
@@ -523,7 +525,7 @@ function logout() {
 
 /* ================================================================
    9. TRACKING — doTrack()
-   Multi-paket: tampilkan daftar paket di bawah nama pesanan
+   Multi-paket: tampilkan daftar paket di bawah nama pesanan, moses
 ================================================================ */
 const trackData = {
   'FW-2024-0001': { name:'Express Wash — 3.5 kg',                              status:'Dalam Proses',           step:3, multi:false },
@@ -591,7 +593,7 @@ function doTrack() {
 
 
 /* ================================================================
-   10. SETELAH BOOKING BERHASIL
+   10. SETELAH BOOKING BERHASIL reza
 ================================================================ */
 function afterBooking() {
   const overlay = document.getElementById('success-overlay');
@@ -609,7 +611,7 @@ function afterBooking() {
 
 
 /* ================================================================
-   11. INISIALISASI
+   11. INISIALISASI, reza
 ================================================================ */
 (function init() {
   const today = new Date().toISOString().split('T')[0];

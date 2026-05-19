@@ -1,9 +1,9 @@
 /* ================================================================
-   FRESHWAVE LAUNDRY — JAVASCRIPT GABUNGAN (UPDATED LOCAL STORAGE)
+   FRESHWAVE LAUNDRY 
    File: laundry.js
 ================================================================ */
 
-/* 1. DATA LAYANAN BARU (BASIC WASH DIHAPUS, DIGANTI OPSI PREMIUM) */
+/* 1. DATA LAYANAN BARU */
 const packages = {
   express: { name:'Fast & Clean',      priceNum:9000,   unit:'kg',    emoji:'⚡', desc:'Cuci kilat higienis 12 jam selesai dengan wangi segar morning dew.' },
   premium: { name:'Luxury Deep Clean', priceNum:18000,  unit:'kg',    emoji:'👑', desc:'Pembersihan noda mendalam dengan setrika uap anti kusut & parfum luxury.' },
@@ -38,7 +38,7 @@ function goto(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   target.classList.add('active');
 
-  // PERBAIKAN BUG NAVIGASI NAVBAR LINE SEJAJAR
+  // NAVIGASI NAVBAR LINE SEJAJAR
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   const navMap = { home:'nav-home', packages:'nav-packages', tracking:'nav-tracking' };
   
@@ -263,7 +263,7 @@ function doTrack() {
   document.getElementById('res-name').textContent = order.name;
   document.getElementById('res-items').innerHTML = order.items.replace(/\n/g, '<br>');
 
-  /* FITUR BARU: JIKA USER TIDAK MEMILIH WA ADMIN DI AWAL, TETAP BISA CHAT DARI MENU TRACKING */
+  /* FITUR: JIKA USER TIDAK MEMILIH WA ADMIN DI AWAL, TETAP BISA CHAT DARI MENU TRACKING */
   if (!order.waSent) {
     backupArea.style.display = 'block';
     const waMessage = `Halo Admin! Saya ingin mengirim ulang rincian pesanan saya yang tertunda:\n\n*ID Pesanan:* ${order.id}\n*Nama:* ${order.name}\n*Alamat:* ${order.address}\n\n*Layanan:*\n${order.items}`;

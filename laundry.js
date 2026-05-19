@@ -1,57 +1,36 @@
 /* ================================================================
-   FRESHWAVE LAUNDRY 
+   FRESHWAVE LAUNDRY — JAVASCRIPT GABUNGAN (UPDATED LOCAL STORAGE)
    File: laundry.js
-
-   BAGIAN:
-     1.  Data Paket
-     2.  State Aplikasi
-     3.  Navigasi Halaman
-     4.  Halaman Paket
-     5.  BOOKING BARU: multi-paket, diskon, pembayaran, WA
-     6.  Modal Login/Register (UPDATED VALIDATION MOCK)
-     7.  Login & Register (UPDATED WITH VALIDATION & DB SIMULATION)
-     8.  loginSuccess() & logout()
-     9.  Tracking (update multi-paket)
-     10. afterBooking()
-     11. Inisialisasi
-
-     kalo ad salah penamaan bagian , ganti.
 ================================================================ */
 
-
-/* ================================================================
-   1. DATA PAKET arya satya, js kau masih ad dibawah
-================================================================ */
+/* 1. DATA LAYANAN BARU (BASIC WASH DIHAPUS, DIGANTI OPSI PREMIUM) */
 const packages = {
-  basic:   { name:'Basic Wash',        price:'Rp 7.000/kg',       tag:'Paket Standar',   title:'Basic Wash',        sub:'Solusi ekonomis untuk cucian harian berkualitas',                          priceStr:'Rp 7.000 <span>/ kg</span>',       priceNum:7000,   unit:'kg',    emoji:'🧺' },
-  express: { name:'Express Wash',      price:'Rp 12.000/kg',      tag:'Paket Terpopuler',title:'Express Wash',      sub:'Layanan cuci kilat profesional untuk kebutuhan mendesak Anda',             priceStr:'Rp 12.000 <span>/ kg</span>',      priceNum:12000,  unit:'kg',    emoji:'⚡' },
-  premium: { name:'Premium Care',      price:'Rp 25.000/item',    tag:'Paket Premium',   title:'Premium Care',      sub:'Perawatan terbaik untuk pakaian istimewa Anda',                            priceStr:'Rp 25.000 <span>/ item</span>',    priceNum:25000,  unit:'item',  emoji:'👔' },
-  sepatu:  { name:'Cuci Sepatu',       price:'Rp 35.000/pasang',  tag:'Layanan Spesial', title:'Cuci Sepatu',       sub:'Kembalikan kilap sepatu kesayangan Anda',                                  priceStr:'Rp 35.000 <span>/ pasang</span>',  priceNum:35000,  unit:'pasang',emoji:'👟' },
-  bed:     { name:'Bed & Bath',        price:'Rp 20.000/item',    tag:'Layanan Khusus',  title:'Bed & Bath',        sub:'Perawatan sprei, selimut, dan perlengkapan kamar mandi',                   priceStr:'Rp 20.000 <span>/ item</span>',    priceNum:20000,  unit:'item',  emoji:'🛏️'},
-  monthly: { name:'Langganan Bulanan', price:'Rp 200.000/bulan',  tag:'Paket Hemat',     title:'Langganan Bulanan', sub:'Nikmati kemudahan laundry setiap bulan dengan harga terjangkau',           priceStr:'Rp 200.000 <span>/ bulan</span>',  priceNum:200000, unit:'bulan', emoji:'🗓️'}
+  express: { name:'Fast & Clean',      priceNum:9000,   unit:'kg',    emoji:'⚡', desc:'Cuci kilat higienis 12 jam selesai dengan wangi segar morning dew.' },
+  premium: { name:'Luxury Deep Clean', priceNum:18000,  unit:'kg',    emoji:'👑', desc:'Pembersihan noda mendalam dengan setrika uap anti kusut & parfum luxury.' },
+  sepatu:  { name:'Leather & Shoes',   priceNum:35000,  unit:'pasang',emoji:'👟', desc:'Pembersihan manual hand-wash premium serta proteksi khusus noda air.' },
+  gown:    { name:'Silk & Gown',       priceNum:50000,  unit:'item',  emoji:'👗', desc:'Perawatan eksklusif gaun pesta, kebaya, atau kain sutra berpayet mahal.' },
+  bed:     { name:'Bedding Luxury',    priceNum:25000,  unit:'item',  emoji:'🛏️', desc:'Sterilisasi sprei, selimut, dan bedcover besar dari tungau debu.' },
+  carpet:  { name:'Curtain & Carpet',  priceNum:40000,  unit:'m²',    emoji:'🏡', desc:'Ekstraksi noda karpet bulu tebal dan gorden berat anti apek.' }
 };
 
+/* 2. STATE APLIKASI (LOCAL STORAGE SESSION MANAGEMENT) */
+let currentUser     = null;      
+let selectedPkg     = 'express'; 
+let pendingAction   = null;      
+let currentOrderId  = null;      
+let isNewUser       = true;      
+let cartItems       = {};        
+let selectedPayment = '';        
 
-/* ================================================================
-   2. STATE APLIKASI ghassan, febri, js kalian masih ad dibawh
-================================================================ */
-let currentUser     = null;      /* null = belum login */
-let selectedPkg     = 'express'; /* paket terakhir diklik */
-let pendingAction   = null;      /* aksi tertunda sebelum login */
-let currentOrderId  = null;      /* nomor order terakhir */
-let isNewUser       = true;      /* true = dapat diskon 30% */
-let cartItems       = {};        /* { pkgId: { qty, checked } } */
-let selectedPayment = '';        /* metode pembayaran */
-
-/* Simulasi database lokal untuk menyimpan user yang terdaftar */
-let userDatabase = [
-  { name: 'Budi Santoso', email: 'budi@gmail.com', phone: '081234567890', pass: 'password123' }
+/* Database simulasi akun lokal */
+let userDatabase = JSON.parse(localStorage.getItem('fw_user_db')) || [
+  { name: 'Budi Santoso', email: 'budi@gmail.com', phone: '081234567890', pass: 'password123', address: 'Jl. Angkatan 45 No. 12, Palembang', avatar: 'B' }
 ];
 
+/* Menampung database order lokal */
+let orderDatabase = JSON.parse(localStorage.getItem('fw_order_db')) || {};
 
-/* ================================================================
-   3. NAVIGASI HALAMAN nashwa
-================================================================ */
+/* 3. NAVIGASI HALAMAN */
 function goto(page) {
   const target = document.getElementById('page-' + page);
   if (!target) return;
@@ -59,52 +38,51 @@ function goto(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   target.classList.add('active');
 
+  // PERBAIKAN BUG NAVIGASI NAVBAR LINE SEJAJAR
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   const navMap = { home:'nav-home', packages:'nav-packages', tracking:'nav-tracking' };
-  if (navMap[page]) { const el = document.getElementById(navMap[page]); if (el) el.classList.add('active'); }
+  
+  if (navMap[page]) { 
+    const el = document.getElementById(navMap[page]); 
+    if (el) el.classList.add('active'); 
+  } else if (page === 'booking' || page === 'detail') {
+    // Jika berada di form booking atau detail, garis bawah tetap stay di 'Paket & Layanan'
+    const el = document.getElementById('nav-packages');
+    if (el) el.classList.add('active');
+  }
 
   window.scrollTo(0, 0);
   if (page === 'booking') renderPkgChecklist();
+  if (page === 'profile') loadProfileDataForm();
 }
 
-
-/* ================================================================
-   4. HALAMAN PAKET arya satya
-================================================================ */
-function viewDetail(pkgId) {
-  selectedPkg = pkgId;
-  const p = packages[pkgId]; if (!p) return;
-  document.getElementById('detail-tag').textContent   = p.tag;
-  document.getElementById('detail-title').textContent = p.title;
-  document.getElementById('detail-sub').textContent   = p.sub;
-  document.getElementById('detail-price').innerHTML   = p.priceStr;
-  goto('detail');
+/* 3b. INTERAKSI FLIP CARD BUTTON */
+function toggleCardFlip(cardContainerId) {
+  const container = document.getElementById(cardContainerId);
+  if (container) {
+    container.classList.toggle('flipped');
+  }
 }
 
+/* 4. HALAMAN PAKET & ADD TO CART */
 function selectPackage(pkgId) {
   selectedPkg = pkgId;
-  if (!currentUser) { pendingAction = 'booking'; openModal('login'); return; }
+  if (!currentUser) { 
+    pendingAction = 'booking'; 
+    openModal('login'); 
+    return; 
+  }
   addToCart(pkgId);
   goto('booking');
 }
 
-function bookFromDetail() {
-  if (!currentUser) { pendingAction = 'booking'; openModal('login'); return; }
-  addToCart(selectedPkg);
-  goto('booking');
-}
-
 function addToCart(pkgId) {
-  if (!cartItems[pkgId]) cartItems[pkgId] = { qty:1, checked:true };
-  else cartItems[pkgId].checked = true;
+  // Reset cart lain agar fokus ke paket yang dipilih langsung
+  cartItems = {};
+  cartItems[pkgId] = { qty: 1, checked: true };
 }
 
-
-/* ================================================================
-   5. BOOKING BARU reza , js kau masih ado dibawah
-================================================================ */
-
-/* 5a. Render daftar checklist paket */
+/* 5. RENDER FORM CHECKLIST BOOKING */
 function renderPkgChecklist() {
   const container = document.getElementById('pkg-checklist');
   if (!container) return;
@@ -116,505 +94,475 @@ function renderPkgChecklist() {
     const qty      = (cartItems[pkgId] && cartItems[pkgId].qty) || 1;
 
     const row = document.createElement('div');
-    row.className = 'pkg-check-item' + (isActive ? ' active' : '');
-    row.id        = 'pkgrow-' + pkgId;
+    row.style.display = "flex";
+    row.style.justifyContent = "space-between";
+    row.style.alignItems = "center";
+    row.style.padding = "10px";
+    row.style.background = isActive ? "var(--green-light)" : "var(--white)";
+    row.style.border = "1px solid var(--border)";
+    row.style.borderRadius = "8px";
+    row.style.cursor = "pointer";
+    
     row.innerHTML = `
-      <div class="pkg-checkbox">${isActive ? '✓' : ''}</div>
-      <div class="pkg-check-emoji">${p.emoji}</div>
-      <div class="pkg-check-info">
-        <div class="pkg-check-name">${p.name}</div>
-        <div class="pkg-check-price">${formatRp(p.priceNum)} / ${p.unit}</div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-weight:bold; color:var(--green);">${isActive ? '✓ ' : '○ '}</span>
+        <span>${p.emoji} <strong>${p.name}</strong></span>
       </div>
-      <div class="pkg-qty-wrap">
-        <input class="pkg-qty-input" type="number" min="0.5" step="0.5"
-          value="${qty}" id="qty-${pkgId}"
-          onclick="event.stopPropagation()"
-          oninput="onQtyChange('${pkgId}', this.value)"
-          placeholder="1">
-        <span class="pkg-qty-unit">${p.unit}</span>
-      </div>`;
-    row.addEventListener('click', () => togglePkg(pkgId));
+      <div>
+        <input type="number" min="1" value="${qty}" style="width:50px; text-align:center; padding:4px;" 
+          onchange="updateCartQty('${pkgId}', this.value)" onclick="event.stopPropagation()">
+        <span style="font-size:0.8rem; color:var(--muted);"> ${p.unit}</span>
+      </div>
+    `;
+    row.onclick = () => {
+      if (cartItems[pkgId]) {
+        cartItems[pkgId].checked = !cartItems[pkgId].checked;
+      } else {
+        cartItems[pkgId] = { qty: 1, checked: true };
+      }
+      renderPkgChecklist();
+    };
     container.appendChild(row);
   });
 
   updateSummary();
 
-  /* Pre-fill nama & nomor telepon jika user sudah login */
   if (currentUser) {
-    const nm = document.getElementById('book-name');
-    if (nm && !nm.value) nm.value = currentUser.name || '';
-    const ph = document.getElementById('book-phone');
-    if (ph && !ph.value) ph.value = currentUser.phone || '';
+    if(document.getElementById('book-name')) document.getElementById('book-name').value = currentUser.name || '';
+    if(document.getElementById('book-phone')) document.getElementById('book-phone').value = currentUser.phone || '';
+    if(document.getElementById('book-address')) document.getElementById('book-address').value = currentUser.address || '';
   }
 }
 
-/* 5b. Toggle centang paket */
-function togglePkg(pkgId) {
-  if (!cartItems[pkgId]) cartItems[pkgId] = { qty:1, checked:false };
-  cartItems[pkgId].checked = !cartItems[pkgId].checked;
-
-  const row = document.getElementById('pkgrow-' + pkgId);
-  const cb  = row ? row.querySelector('.pkg-checkbox') : null;
-  if (cartItems[pkgId].checked) {
-    if (row) row.classList.add('active');
-    if (cb)  cb.textContent = '✓';
-  } else {
-    if (row) row.classList.remove('active');
-    if (cb)  cb.textContent = '';
-  }
+function updateCartQty(pkgId, qty) {
+  if (!cartItems[pkgId]) cartItems[pkgId] = { qty: 1, checked: true };
+  cartItems[pkgId].qty = parseFloat(qty) || 1;
   updateSummary();
 }
 
-/* 5c. Update qty */
-function onQtyChange(pkgId, val) {
-  const num = parseFloat(val);
-  if (!isNaN(num) && num > 0) {
-    if (!cartItems[pkgId]) cartItems[pkgId] = { qty:num, checked:true };
-    else cartItems[pkgId].qty = num;
-  }
-  updateSummary();
-}
-
-/* 5d. Hitung & tampilkan ringkasan */
 function updateSummary() {
-  const siEl   = document.getElementById('summary-items');
-  const stEl   = document.getElementById('summary-subtotal');
-  const sdEl   = document.getElementById('summary-discount');
-  const sttEl  = document.getElementById('summary-total');
-  const drEl   = document.getElementById('discount-row');
-  const nbEl   = document.getElementById('new-user-badge');
-  if (!siEl) return;
+  const itemsEl = document.getElementById('summary-items');
+  if (!itemsEl) return;
 
-  const active = Object.keys(cartItems).filter(id => cartItems[id].checked);
+  let total = 0;
+  let summaryHtml = '<ul style="list-style:none; display:flex; flex-direction:column; gap:8px;">';
 
-  if (active.length === 0) {
-    siEl.innerHTML = '<div class="summary-empty">Belum ada paket dipilih</div>';
-    if (stEl)  stEl.textContent  = formatRp(0);
-    if (sttEl) sttEl.textContent = formatRp(0);
-    if (drEl)  drEl.style.display  = 'none';
-    if (nbEl)  nbEl.style.display  = 'none';
-    return;
-  }
-
-  let subtotal = 0;
-  let html = '';
-  active.forEach(id => {
-    const p   = packages[id];
-    const qty = cartItems[id].qty || 1;
-    const sub = p.priceNum * qty;
-    subtotal += sub;
-    html += `<div class="summary-item-row">
-      <div>
-        <div class="si-name">${p.emoji} ${p.name}</div>
-        <div class="si-detail">${qty} ${p.unit} × ${formatRp(p.priceNum)}</div>
-      </div>
-      <div class="si-price">${formatRp(sub)}</div>
-    </div>`;
+  Object.keys(cartItems).forEach(pkgId => {
+    if (cartItems[pkgId] && cartItems[pkgId].checked) {
+      const p = packages[pkgId];
+      const qty = cartItems[pkgId].qty;
+      const sub = p.priceNum * qty;
+      total += sub;
+      summaryHtml += `<li style="display:flex; justify-content:space-between; font-size:0.9rem;">
+        <span>${p.name} (x${qty})</span>
+        <span>Rp ${sub.toLocaleString('id-ID')}</span>
+      </li>`;
+    }
   });
-  siEl.innerHTML = html;
-  if (stEl) stEl.textContent = formatRp(subtotal);
 
-  let total = subtotal;
-  if (isNewUser && subtotal > 0) {
-    const disc = Math.round(subtotal * 0.3);
-    total = subtotal - disc;
-    if (drEl)  drEl.style.display  = 'flex';
-    if (nbEl)  nbEl.style.display  = 'block';
-    if (sdEl)  sdEl.textContent    = '- ' + formatRp(disc);
-  } else {
-    if (drEl)  drEl.style.display  = 'none';
-    if (nbEl)  nbEl.style.display  = 'none';
+  if (isNewUser && total > 0) {
+    const diskon = total * 0.3;
+    total = total - diskon;
+    summaryHtml += `<li style="display:flex; justify-content:space-between; font-size:0.9rem; color:#d93838; font-weight:600;">
+      <span>Diskon Member Baru (30%)</span>
+      <span>- Rp ${diskon.toLocaleString('id-ID')}</span>
+    </li>`;
   }
-  if (sttEl) sttEl.textContent = formatRp(total);
+
+  summaryHtml += `</ul><div style="margin-top:15px; padding-top:10px; border-top:2px solid var(--border); display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; color:var(--green);">
+    <span>Total Bayar:</span>
+    <span>Rp ${total.toLocaleString('id-ID')}</span>
+  </div>`;
+
+  itemsEl.innerHTML = total === 0 ? '<div style="color:var(--muted); font-size:0.9rem;">Belum ada item aktif dipilih.</div>' : summaryHtml;
 }
 
-/* Format Rupiah */
-function formatRp(num) {
-  return 'Rp ' + Math.round(num).toLocaleString('id-ID');
-}
-
-/* 5e. Pilih metode pembayaran */
-function selectPayment(radio) {
-  selectedPayment = radio.value;
-  document.querySelectorAll('.pay-option').forEach(el => el.classList.remove('active'));
-  const parent = radio.closest ? radio.closest('.pay-option') : null;
-  if (parent) parent.classList.add('active');
-}
-
-/* 5f. Submit booking → validasi → kirim WA */
+/* 6. PROSES SUBMIT BOOKING PENJEMPUTAN */
 function submitBooking() {
-  /* 1. cek paket */
-  const active = Object.keys(cartItems).filter(id => cartItems[id].checked);
-  if (active.length === 0) { alert('Pilih minimal 1 paket terlebih dahulu.'); return; }
+  const name = document.getElementById('book-name').value;
+  const phone = document.getElementById('book-phone').value;
+  const date = document.getElementById('book-date').value;
+  const time = document.getElementById('book-time').value;
+  const address = document.getElementById('book-address').value;
 
-  /* 2. cek data diri */
-  const name    = (document.getElementById('book-name')    || {}).value || '';
-  const phone   = (document.getElementById('book-phone')   || {}).value || '';
-  const address = (document.getElementById('book-address') || {}).value || '';
-  const date    = (document.getElementById('book-date')    || {}).value || '';
-  const time    = (document.getElementById('book-time')    || {}).value || '';
-  const catatan = (document.getElementById('book-notes')   || {}).value || '';
+  if (!name || !phone || !date || !address || !selectedPayment) {
+    alert('Mohon lengkapi seluruh kolom formulir dan pilih metode pembayaran!');
+    return;
+  }
 
-  if (!name.trim())    { alert('Masukkan nama lengkap.'); return; }
-  if (!phone.trim())   { alert('Masukkan nomor WhatsApp.'); return; }
-  if (!address.trim()) { alert('Masukkan alamat penjemputan.'); return; }
-  if (!date)           { alert('Pilih tanggal penjemputan.'); return; }
-  if (!time)           { alert('Pilih waktu penjemputan.'); return; }
-  if (!selectedPayment){ alert('Pilih metode pembayaran.'); return; }
+  const activePkgs = Object.keys(cartItems).filter(id => cartItems[id].checked);
+  if (activePkgs.length === 0) {
+    alert('Pilih minimal satu layanan laundry!');
+    return;
+  }
 
-  /* 3. hitung total */
-  let subtotal = 0;
-  active.forEach(id => { subtotal += packages[id].priceNum * (cartItems[id].qty || 1); });
-  const discount = isNewUser ? Math.round(subtotal * 0.3) : 0;
-  const total    = subtotal - discount;
+  // Generate ID Acak Sementara
+  const randId = 'FW-' + Math.floor(1000 + Math.random() * 9000);
+  currentOrderId = randId;
 
-  /* 4. buat nomor order sementara */
-  const oid = 'FW-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
-  currentOrderId = oid;
+  // Bangun teks detail pesanan
+  let itemString = '';
+  activePkgs.forEach(id => {
+    itemString += `- ${packages[id].name} (${cartItems[id].qty} ${packages[id].unit})\n`;
+  });
 
-  /* 5. simpan ke trackData agar bisa dilacak */
-  const namaPaketList = active.map(id => `${packages[id].name} (${cartItems[id].qty||1} ${packages[id].unit})`);
-  trackData[oid.toUpperCase()] = {
-    name:    namaPaketList.length === 1 ? namaPaketList[0] : namaPaketList.length + ' Paket',
-    pkgList: namaPaketList,
-    status:  'Menunggu Konfirmasi Admin',
-    step:    0,
-    multi:   namaPaketList.length > 1
+  // Simpan data order ke local database lokal
+  orderDatabase[randId] = {
+    id: randId,
+    name: name,
+    phone: phone,
+    date: date,
+    time: time,
+    address: address,
+    items: itemString,
+    payment: selectedPayment,
+    status: 'Dalam Antrean Prioritas',
+    waSent: document.getElementById('notify-wa').checked
   };
+  localStorage.setItem('fw_order_db', JSON.stringify(orderDatabase));
 
-  /* 6. bangun pesan WA */
-  const lines = [
-    'Halo Admin FreshWave! 👋',
-    '',
-    'Saya ingin melakukan booking laundry:',
-    '',
-    '📋 *DETAIL PESANAN*',
-    'No. Order Sementara: ' + oid,
-    '',
-    '🧺 *Paket yang Dipesan:*',
-    ...active.map(id => {
-      const p = packages[id]; const qty = cartItems[id].qty||1;
-      return `• ${p.name}: ${qty} ${p.unit} × ${formatRp(p.priceNum)} = ${formatRp(p.priceNum*qty)}`;
-    }),
-    '',
-    '💰 Subtotal: ' + formatRp(subtotal),
-    ...(isNewUser ? ['🎉 Diskon Pengguna Baru (30%): - ' + formatRp(discount)] : []),
-    '✅ *Total Bayar: ' + formatRp(total) + '*',
-    '💳 Pembayaran: ' + selectedPayment,
-    '',
-    '👤 *Data Penjemputan:*',
-    'Nama    : ' + name.trim(),
-    'WA      : ' + phone.trim(),
-    'Alamat  : ' + address.trim(),
-    'Tanggal : ' + date,
-    'Waktu   : ' + time,
-    ...(catatan.trim() ? ['Catatan : ' + catatan.trim()] : []),
-    '',
-    'Mohon konfirmasi dan kirimkan kode tracking resminya ya, terima kasih! 🙏'
-  ];
-
-  const waEncoded = encodeURIComponent(lines.join('\n'));
-  const adminWA   = '6281271310014'; /* ← ganti nomor WA admin FreshWave */
-  const waURL     = 'https://wa.me/' + adminWA + '?text=' + waEncoded;
-
-  /* 7. isi modal sukses */
-  const oidEl = document.getElementById('order-id-display');
-  if (oidEl) oidEl.textContent = oid;
-  const waBtn = document.getElementById('wa-open-btn');
-  if (waBtn) waBtn.href = waURL;
-
-  /* 8. tampilkan modal sukses */
-  const overlay = document.getElementById('success-overlay');
-  if (overlay) overlay.classList.add('open');
-
-  /* 9. setelah booking pertama, bukan pengguna baru lagi */
-  isNewUser = false;
-}
-
-
-/* ================================================================
-   6. MODAL LOGIN/REGISTER febri, ghsan
-================================================================ */
-function openModal(tab) {
-  tab = tab || 'login';
-  switchTab(tab);
-  const m = document.getElementById('auth-modal');
-  if (m) m.classList.add('open');
-  const e = document.getElementById('modal-error');
-  if (e) e.classList.remove('show');
-}
-
-function closeModal() {
-  const m = document.getElementById('auth-modal');
-  if (m) m.classList.remove('open');
-}
-
-function switchTab(tab) {
-  const fl = document.getElementById('form-login');
-  const fr = document.getElementById('form-register');
-  const tl = document.getElementById('tab-login');
-  const tr = document.getElementById('tab-register');
-  const mt = document.getElementById('modal-title');
-  const ms = document.getElementById('modal-sub');
-  const me = document.getElementById('modal-error');
-
-  if (fl) fl.style.display = tab==='login' ? 'block':'none';
-  if (fr) fr.style.display = tab==='register'?'block':'none';
-  if (tl) tl.classList.toggle('active', tab==='login');
-  if (tr) tr.classList.toggle('active', tab==='register');
-  if (mt) mt.textContent = tab==='login'?'Selamat Datang':'Buat Akun';
-  if (ms) ms.textContent = tab==='login'?'Masuk untuk melanjutkan booking Anda':'Daftar gratis dan dapatkan diskon 30%';
-  if (me) me.classList.remove('show');
-}
-
-/* Helper internal untuk validasi format regex email dan angka telepon */
-function validateEmailFormat(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(String(email).toLowerCase());
-}
-
-function validatePhoneFormat(phone) {
-  const re = /^[0-9]+$/;
-  return re.test(phone) && phone.length >= 10 && phone.length <= 13;
-}
-
-
-/* ================================================================
-   7. LOGIN & REGISTER febri, ghsan, js febri masih ado dbwh
-================================================================ */
-function doLogin() {
-  const email = (document.getElementById('login-email')||{}).value||'';
-  const pass  = (document.getElementById('login-password')||{}).value||'';
-  const errEl = document.getElementById('modal-error');
+  // Munculkan Modal Sukses
+  document.getElementById('display-order-id').textContent = randId;
   
-  if (!errEl) return;
+  // Create URL WhatsApp Chat Admin
+  const waMessage = `Halo Admin FreshWave! Saya ingin mengonfirmasi booking laundry premium:\n\n*ID Pesanan:* ${randId}\n*Nama:* ${name}\n*No HP:* ${phone}\n*Jadwal Pick-Up:* ${date} [Jam ${time}]\n*Alamat:* ${address}\n\n*Layanan Diorder:*\n${itemString}*Metode Pembayaran:* ${selectedPayment}\n\nMohon segera diproses, terima kasih!`;
+  const waUrl = `https://api.whatsapp.com/send?phone=6281234567890&text=${encodeURIComponent(waMessage)}`;
+  
+  const shareBtn = document.getElementById('wa-share-btn');
+  shareBtn.href = waUrl;
 
-  // 1. Validasi Input Kosong
-  if (!email.trim() || !pass) { 
-    errEl.textContent = 'Mohon isi email dan password.'; 
-    errEl.classList.add('show'); 
-    return; 
+  if (document.getElementById('notify-wa').checked) {
+    // Jika dicentang, buka jendela baru otomatis
+    window.open(waUrl, '_blank');
   }
 
-  // 2. Validasi Format Email
-  if (!validateEmailFormat(email.trim())) {
-    errEl.textContent = 'Format email salah! Pastikan menggunakan format alamat email yang benar (contoh: user@gmail.com).';
-    errEl.classList.add('show');
+  document.getElementById('success-overlay').classList.add('open');
+}
+
+/* 7. TRACKING SISTEM */
+function doTrack() {
+  const input = document.getElementById('track-input').value.trim().toUpperCase();
+  const resultBox = document.getElementById('track-result');
+  const backupArea = document.getElementById('wa-backup-area');
+
+  if (!input) {
+    alert('Silakan masukkan ID Pesanan terlebih dahulu!');
     return;
   }
 
-  // 3. Validasi Keberadaan Akun di Database Mock
-  const user = userDatabase.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
+  const order = orderDatabase[input];
+  if (!order) {
+    alert('ID Pesanan tidak ditemukan. Pastikan kode yang dimasukkan valid (Contoh: FW-1234).');
+    resultBox.style.display = 'none';
+    return;
+  }
+
+  document.getElementById('res-id').textContent = order.id;
+  document.getElementById('res-status').textContent = order.status;
+  document.getElementById('res-date').textContent = 'Tanggal Pick-up: ' + order.date + ' | Jam: ' + order.time;
+  document.getElementById('res-name').textContent = order.name;
+  document.getElementById('res-items').innerHTML = order.items.replace(/\n/g, '<br>');
+
+  /* FITUR BARU: JIKA USER TIDAK MEMILIH WA ADMIN DI AWAL, TETAP BISA CHAT DARI MENU TRACKING */
+  if (!order.waSent) {
+    backupArea.style.display = 'block';
+    const waMessage = `Halo Admin! Saya ingin mengirim ulang rincian pesanan saya yang tertunda:\n\n*ID Pesanan:* ${order.id}\n*Nama:* ${order.name}\n*Alamat:* ${order.address}\n\n*Layanan:*\n${order.items}`;
+    document.getElementById('wa-backup-btn').onclick = function() {
+      order.waSent = true; // Tandai sudah terkirim
+      localStorage.setItem('fw_order_db', JSON.stringify(orderDatabase));
+      backupArea.style.display = 'none';
+      window.open(`https://api.whatsapp.com/send?phone=6281234567890&text=${encodeURIComponent(waMessage)}`, '_blank');
+    };
+  } else {
+    backupArea.style.display = 'none';
+  }
+
+  resultBox.style.display = 'block';
+}
+
+/* 8. MODAL AUTH SWITCHING */
+function openModal(tab = 'login') {
+  document.getElementById('auth-modal').classList.add('open');
+  switchTab(tab);
+}
+function closeModal() {
+  document.getElementById('auth-modal').classList.remove('open');
+}
+function switchTab(tab) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  if (tab === 'login') {
+    document.getElementById('tab-login').classList.add('active');
+    document.getElementById('form-login').style.display = 'block';
+    document.getElementById('form-register').style.display = 'none';
+  } else {
+    document.getElementById('tab-register').classList.add('active');
+    document.getElementById('form-login').style.display = 'none';
+    document.getElementById('form-register').style.display = 'block';
+  }
+}
+
+/* FITUR MATA UNTUK PASWORD */
+function togglePasswordVisibility(inputId) {
+  const input = document.getElementById(inputId);
+  if(input) {
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+}
+
+/* FITUR LUPA PASSWORD MOCKUP */
+function triggerForgotPassword() {
+  const idf = document.getElementById('login-identifier').value;
+  if(!idf) {
+    alert('Silakan ketik Email atau No HP Anda terlebih dahulu pada kotak input di atas.');
+  } else {
+    alert('Link pemulihan / kode reset password premium telah dikirim ke: ' + idf);
+  }
+}
+
+/* 9. PROSES AUTH LOGIN & REGISTER (PERSISTENCE STATE) */
+function doLogin() {
+  const idf = document.getElementById('login-identifier').value.trim();
+  const pass = document.getElementById('login-password').value;
+
+  if (!idf || !pass) {
+    alert('Kolom email/telepon dan password wajib diisi!');
+    return;
+  }
+
+  const user = userDatabase.find(u => (u.email === idf || u.phone === idf) && u.pass === pass);
+  if (user) {
+    loginSuccess(user);
+  } else {
+    alert('Kombinasi akun atau password Anda salah!');
+  }
+}
+
+/* LOGIN TANPA PASSWORD (MASUK CEPAT HANYA MENGGUNAKAN EMAIL/HP) */
+function doLoginWithoutPassword() {
+  const idf = document.getElementById('login-identifier').value.trim();
+  if (!idf) {
+    alert('Silakan isi alamat email atau No Telepon Anda untuk login cepat.');
+    return;
+  }
+  
+  let user = userDatabase.find(u => u.email === idf || u.phone === idf);
   if (!user) {
-    errEl.textContent = 'Akun tidak terdaftar! Silakan klik tab "Daftar" di atas untuk membuat akun baru terlebih dahulu.';
-    errEl.classList.add('show');
-    return;
+    // Jika belum terdaftar, buat akun instan otomatis
+    user = { name: 'Member FreshWave', email: idf.includes('@') ? idf : '', phone: !idf.includes('@') ? idf : '', pass: '123456', address: '', avatar: 'M' };
+    userDatabase.push(user);
+    localStorage.setItem('fw_user_db', JSON.stringify(userDatabase));
   }
-
-  // 4. Validasi Password Berdasarkan Database Mock
-  if (user.pass !== pass) {
-    errEl.textContent = 'Password yang Anda masukkan salah. Silakan coba lagi.';
-    errEl.classList.add('show');
-    return;
-  }
-
-  // Jika sukses lolos semua validasi
-  isNewUser = false; // Sesuai aturan app asli, user lama tidak langsung memicu diskon baru kecuali dari register ulang
-  loginSuccess({ name: user.name, email: user.email, phone: user.phone });
+  loginSuccess(user);
 }
 
 function doRegister() {
-  const name  = (document.getElementById('reg-name')||{}).value||'';
-  const phone = (document.getElementById('reg-phone')||{}).value||'';
-  const email = (document.getElementById('reg-email')||{}).value||'';
-  const pass  = (document.getElementById('reg-password')||{}).value||'';
-  const errEl = document.getElementById('modal-error');
-  
-  if (!errEl) return;
+  const name = document.getElementById('reg-name').value;
+  const phone = document.getElementById('reg-phone').value;
+  const email = document.getElementById('reg-email').value;
+  const pass = document.getElementById('reg-password').value;
 
-  // 1. Validasi Input Kosong
-  if (!name.trim() || !phone.trim() || !email.trim() || !pass) { 
-    errEl.textContent = 'Mohon lengkapi semua data.'; 
-    errEl.classList.add('show'); 
-    return; 
-  }
-
-  // 2. Validasi Format Email
-  if (!validateEmailFormat(email.trim())) {
-    errEl.textContent = 'Format email salah! Harus menyertakan "@" dan domain yang valid (contoh: nama@gmail.com).';
-    errEl.classList.add('show');
+  if (!name || !phone || !email || !pass) {
+    alert('Harap isi semua bidang pendaftaran!');
     return;
   }
 
-  // 3. Validasi Format & Panjang Nomor Telepon
-  if (!validatePhoneFormat(phone.trim())) {
-    errEl.textContent = 'Nomor telepon tidak valid! Harus berupa angka saja dan berjumlah antara 10-13 digit.';
-    errEl.classList.add('show');
+  const userExists = userDatabase.some(u => u.email === email || u.phone === phone);
+  if (userExists) {
+    alert('Email atau nomor telepon tersebut sudah terdaftar sebagai member.');
     return;
   }
 
-  // 4. Validasi Panjang Minimal Password
-  if (pass.length < 8) { 
-    errEl.textContent = 'Password minimal 8 karakter.'; 
-    errEl.classList.add('show'); 
-    return; 
-  }
-
-  // 5. Cek apakah Email Sudah Pernah Terdaftar sebelumnya
-  const isExist = userDatabase.some(u => u.email.toLowerCase() === email.trim().toLowerCase());
-  if (isExist) {
-    errEl.textContent = 'Email ini sudah terdaftar. Silakan beralih ke tab Login untuk masuk.';
-    errEl.classList.add('show');
-    return;
-  }
-
-  // Simpan data pendaftaran baru ke dalam database lokal sistem sementara
-  const newUserObj = { name: name.trim(), email: email.trim().toLowerCase(), phone: phone.trim(), pass: pass };
+  const newUserObj = { name, email, phone, pass, address: '', avatar: name.charAt(0) };
   userDatabase.push(newUserObj);
+  localStorage.setItem('fw_user_db', JSON.stringify(userDatabase));
 
-  isNewUser = true; /* pengguna baru = dapat diskon 30% */
-  loginSuccess({ name: newUserObj.name, email: newUserObj.email, phone: newUserObj.phone });
+  alert('Pendaftaran berhasil! Silakan nikmati layanan prioritas kami.');
+  loginSuccess(newUserObj);
 }
 
-function handlePromoClick() {
-  if (!currentUser) openModal('register');
-  else goto('packages');
-}
-
-
-/* ================================================================
-   8. LOGIN BERHASIL & LOGOUT febri
-================================================================ */
 function loginSuccess(user) {
   currentUser = user;
-  closeModal();
+  // Simpan session login ke localStorage agar refresh tidak logout
+  localStorage.setItem('fw_session_user', JSON.stringify(user));
+  isNewUser = false; 
 
-  const na = document.getElementById('nav-auth');
+  document.getElementById('nav-auth').style.display = 'none';
   const nu = document.getElementById('nav-user');
-  const av = document.getElementById('user-avatar');
-  const nm = document.getElementById('user-name');
-  if (na) na.style.display = 'none';
-  if (nu) nu.style.display = 'flex';
-  if (av) av.textContent   = user.name.charAt(0).toUpperCase();
-  if (nm) nm.textContent   = user.name.split(' ')[0];
+  nu.style.display = 'flex';
+  
+  document.getElementById('user-name').textContent = user.name;
+  document.getElementById('user-avatar').textContent = user.avatar || user.name.charAt(0);
 
-  const pb = document.getElementById('promo-btn');
-  if (pb) pb.textContent = 'Booking Sekarang';
-
-  if (pendingAction === 'booking') {
-    pendingAction = null;
-    goto('booking');
+  closeModal();
+  if (pendingAction === 'booking') { 
+    pendingAction = null; 
+    goto('booking'); 
   }
 }
 
 function logout() {
-  currentUser = null; pendingAction = null;
-  cartItems = {}; selectedPayment = '';
-
-  const na = document.getElementById('nav-auth');
-  const nu = document.getElementById('nav-user');
-  if (na) na.style.display = 'block';
-  if (nu) nu.style.display = 'none';
-
-  const pb = document.getElementById('promo-btn');
-  if (pb) pb.textContent = 'Daftar Gratis';
-
+  currentUser = null;
+  localStorage.removeItem('fw_session_user');
+  document.getElementById('nav-auth').style.display = 'block';
+  document.getElementById('nav-user').style.display = 'none';
   goto('home');
 }
 
-
-/* ================================================================
-   9. TRACKING — doTrack()
-   Multi-paket: tampilkan daftar paket di bawah nama pesanan, moses
-================================================================ */
-const trackData = {
-  'FW-2024-0001': { name:'Express Wash — 3.5 kg',                              status:'Dalam Proses',           step:3, multi:false },
-  'FW-2024-0002': { name:'Basic Wash — 5 kg',                                  status:'Selesai ✓',              step:5, done:true, multi:false },
-  'FW-2024-0003': { name:'3 Paket', pkgList:['Basic Wash (3 kg)','Cuci Sepatu (2 pasang)','Bed & Bath (1 item)'], status:'Sortir & Pengecekan', step:2, multi:true }
-};
-
-function doTrack() {
-  const inputEl  = document.getElementById('track-input');
-  const resultEl = document.getElementById('track-result');
-  if (!inputEl || !resultEl) return;
-
-  const id   = inputEl.value.trim().toUpperCase();
-  const data = trackData[id] || (currentOrderId && id===currentOrderId.toUpperCase() ? trackData[currentOrderId.toUpperCase()] : null);
-
-  if (!data) {
-    resultEl.style.display = 'none';
-    alert('Nomor pesanan tidak ditemukan.\nCoba: FW-2024-0001, FW-2024-0002, atau FW-2024-0003');
-    return;
-  }
-
-  /* Header kartu */
-  const trId   = document.getElementById('tr-id');
-  const trName = document.getElementById('tr-name');
-  if (trId)   trId.textContent   = id;
-  if (trName) trName.textContent = data.name;
-
-  /* Daftar paket multi */
-  const pkgListEl = document.getElementById('tr-pkg-list');
-  if (pkgListEl) {
-    if (data.multi && data.pkgList && data.pkgList.length > 0) {
-      pkgListEl.style.display = 'flex';
-      pkgListEl.innerHTML = data.pkgList.map(p => `<div class="tr-pkg-item">${p}</div>`).join('');
-    } else {
-      pkgListEl.style.display = 'none';
-      pkgListEl.innerHTML = '';
-    }
-  }
-
-  /* Badge status */
-  const sb = document.getElementById('tr-status');
-  if (sb) { sb.textContent = data.status; sb.className = 'status-badge'+(data.done?' done':''); }
-
-  /* Reset timeline */
-  for (let i=1;i<=5;i++) {
-    const d = document.getElementById('tl'+i+'-dot');
-    const l = document.getElementById('tl'+i+'-line');
-    if (d) d.className = 'tl-dot';
-    if (l) l.className = 'tl-line';
-  }
-
-  /* Tandai step */
-  if (data.step > 0) {
-    for (let i=1;i<=data.step;i++) {
-      const d = document.getElementById('tl'+i+'-dot');
-      if (!d) continue;
-      d.className = (i===data.step && !data.done) ? 'tl-dot active' : 'tl-dot done';
-      const l = document.getElementById('tl'+i+'-line');
-      if (l && i<data.step) l.className = 'tl-line done';
-    }
-  }
-
-  resultEl.style.display = 'block';
+/* 10. FITUR EDIT PROFIL MEMBER PANEL */
+function loadProfileDataForm() {
+  if(!currentUser) return;
+  document.getElementById('prof-name').value = currentUser.name || '';
+  document.getElementById('prof-phone').value = currentUser.phone || '';
+  document.getElementById('prof-address').value = currentUser.address || '';
+  document.getElementById('profile-avatar-img').textContent = currentUser.avatar || currentUser.name.charAt(0);
 }
 
+function saveProfileData() {
+  if(!currentUser) return;
+  
+  const oldEmail = currentUser.email;
+  const oldPhone = currentUser.phone;
+
+  currentUser.name = document.getElementById('prof-name').value;
+  currentUser.phone = document.getElementById('prof-phone').value;
+  currentUser.address = document.getElementById('prof-address').value;
+  currentUser.avatar = currentUser.name.charAt(0);
+
+  // Sync / update ke database utama
+  const index = userDatabase.findIndex(u => u.email === oldEmail || u.phone === oldPhone);
+  if (index !== -1) {
+    userDatabase[index] = currentUser;
+    localStorage.setItem('fw_user_db', JSON.stringify(userDatabase));
+  }
+  
+  localStorage.setItem('fw_session_user', JSON.stringify(currentUser));
+  document.getElementById('user-name').textContent = currentUser.name;
+  document.getElementById('user-avatar').textContent = currentUser.avatar;
+  
+  alert('Data akun profil Anda berhasil diperbarui!');
+  goto('home');
+}
+
+function handleAvatarChange(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const avatarContainer = document.getElementById('profile-avatar-img');
+      avatarContainer.textContent = '';
+      avatarContainer.style.background = `url(${e.target.result})`;
+      avatarContainer.style.backgroundSize = 'cover';
+      avatarContainer.style.backgroundPosition = 'center';
+      
+      // Update data di navbar secara live
+      const navAv = document.getElementById('user-avatar');
+      navAv.textContent = '';
+      navAv.style.background = `url(${e.target.result})`;
+      navAv.style.backgroundSize = 'cover';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function handlePromoClick() {
+  if (currentUser) {
+    // User sudah login → langsung ke booking dengan diskon aktif
+    isNewUser = true; // aktifkan diskon member baru
+    goto('packages');
+    showToast('promo', '🎉 Diskon 30% Aktif!', 'Pilih paket favoritmu, diskon langsung diterapkan saat checkout.', 5000);
+  } else {
+    openModal('register');
+  }
+}
 
 /* ================================================================
-   10. SETELAH BOOKING BERHASIL reza
+   TOAST NOTIFICATION SYSTEM
 ================================================================ */
+function showToast(type, title, message, duration = 4000) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️', promo: '🎉' };
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-msg">${message}</div>
+    </div>
+    <button class="toast-close" onclick="dismissToast(this.parentElement)">×</button>
+    <div class="toast-progress" style="animation-duration:${duration}ms"></div>
+  `;
+  container.appendChild(toast);
+  requestAnimationFrame(() => { requestAnimationFrame(() => toast.classList.add('show')); });
+  setTimeout(() => dismissToast(toast), duration);
+  return toast;
+}
+
+function dismissToast(toast) {
+  if (!toast || toast.classList.contains('hide')) return;
+  toast.classList.add('hide');
+  setTimeout(() => toast.remove(), 400);
+}
+
+/* ================================================================
+   RIPPLE EFFECT ON BUTTONS
+================================================================ */
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.btn-primary, .btn-outline, .modal-btn, .nav-cta, .pkg-btn, .promo-cta-btn');
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  const wave = document.createElement('span');
+  wave.className = 'ripple-wave';
+  wave.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;`;
+  btn.appendChild(wave);
+  setTimeout(() => wave.remove(), 700);
+});
+
+/* ================================================================
+   UPDATE PROMO BANNER STATE BASED ON LOGIN
+================================================================ */
+function updatePromoBannerState() {
+  const btn = document.getElementById('promo-btn');
+  const trustGuest = document.getElementById('promo-trust-guest');
+  const trustUser = document.getElementById('promo-trust-user');
+  const promoTitle = document.getElementById('promo-title');
+  const promoDesc = document.getElementById('promo-desc');
+  if (!btn) return;
+
+  if (currentUser) {
+    btn.textContent = '🛒 Booking Sekarang';
+    btn.classList.add('booking-mode');
+    if (trustGuest) trustGuest.style.display = 'none';
+    if (trustUser) trustUser.style.display = 'block';
+    if (promoTitle) promoTitle.textContent = `Hei, ${currentUser.name.split(' ')[0]}! Diskon 30% siap untukmu 🎉`;
+    if (promoDesc) promoDesc.textContent = 'Selamat datang, member FreshWave! Nikmati diskon eksklusif di setiap pesanan perdanamu.';
+  } else {
+    btn.textContent = 'Daftar Gratis';
+    btn.classList.remove('booking-mode');
+    if (trustGuest) trustGuest.style.display = 'block';
+    if (trustUser) trustUser.style.display = 'none';
+    if (promoTitle) promoTitle.textContent = 'Diskon 30% untuk Pelanggan Baru!';
+    if (promoDesc) promoDesc.textContent = 'Daftar sekarang menjadi member FreshWave dan dapatkan diskon langsung pada order pertama Anda.';
+  }
+}
+
 function afterBooking() {
-  const overlay = document.getElementById('success-overlay');
-  if (overlay) overlay.classList.remove('open');
-
+  document.getElementById('success-overlay').classList.remove('open');
   const ti = document.getElementById('track-input');
-  if (ti) ti.value = currentOrderId || 'FW-2024-0001';
-
+  if (ti) ti.value = currentOrderId || '';
   goto('tracking');
   setTimeout(doTrack, 300);
-
-  /* Reset cart */
-  cartItems = {}; selectedPayment = '';
 }
 
-
-/* ================================================================
-   11. INISIALISASI, reza
-================================================================ */
-(function init() {
-  const today = new Date().toISOString().split('T')[0];
-  const di    = document.getElementById('book-date');
-  if (di) { di.min = today; di.value = today; }
-})();
+/* 11. INITIALIZATION CHECK (AUTO LOGIN WHEN REFRESH) */
+window.addEventListener('DOMContentLoaded', () => {
+  const savedSession = localStorage.getItem('fw_session_user');
+  if (savedSession) {
+    const parsedUser = JSON.parse(savedSession);
+    loginSuccess(parsedUser);
+  }
+});

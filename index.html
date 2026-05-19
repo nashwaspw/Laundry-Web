@@ -9,13 +9,6 @@
 </head>
 <body>
 
-  <!-- ============================================================
-    NAVIGASI UTAMA
-    - Logo brand klik → beranda
-    - Link: Beranda | Paket & Layanan | Tracking
-    - Tombol "Masuk / Daftar" (tampil saat BELUM login)
-    - Avatar + nama + tombol Keluar (tampil setelah LOGIN)
-  ============================================================ -->
   <nav>
     <div class="nav-brand" onclick="goto('home')">Fresh<span>Wave</span></div>
     <div class="nav-links">
@@ -24,40 +17,28 @@
       <a onclick="goto('tracking')" id="nav-tracking">Tracking</a>
     </div>
     <div id="nav-auth">
-      <button class="nav-cta" onclick="openModal()">Masuk / Daftar</button>
+      <button class="nav-cta" onclick="openModal('login')">Masuk / Daftar</button>
     </div>
     <div id="nav-user" class="user-info" style="display:none">
-      <div class="user-avatar" id="user-avatar">A</div>
-      <span class="user-name" id="user-name">Pengguna</span>
+      <div class="user-avatar" id="user-avatar" onclick="goto('profile')" title="Lihat Profil">U</div>
+      <span class="user-name" id="user-name" onclick="goto('profile')" style="cursor:pointer">Pengguna</span>
       <button class="logout-btn" onclick="logout()">Keluar</button>
     </div>
   </nav>
 
-
-  <!-- ============================================================
-    HALAMAN 1 — BERANDA  (id="page-home")
-    Aktif secara default saat halaman pertama kali dibuka.
-    Konten:
-      • Hero: judul besar, deskripsi, 2 tombol CTA
-      • Stats Bar: 4 angka statistik
-      • Keunggulan: 6 feature card
-      • Promo Banner: diskon 30% → buka modal register
-      • Testimoni: 3 ulasan pelanggan
-  ============================================================ -->
+  <!-- =================== HALAMAN BERANDA =================== -->
   <div class="page active" id="page-home">
 
-    <!-- [ BERANDA ] Hero Section -->
     <div class="hero">
-      <div class="hero-badge">🌿 Laundry Premium Palembang</div>
+      <div class="hero-badge">🫧 Laundry Bersih & Eco-Care</div>
       <h1>Cucian Bersih,<br><em>Hidup Lebih Ringan</em></h1>
-      <p>Layanan laundry profesional dengan teknologi ramah lingkungan. Antar jemput gratis, selesai dalam 24 jam.</p>
+      <p>Layanan laundry profesional dengan teknologi ramah lingkungan. Antar jemput gratis, selesai dalam 24 jam dengan penanganan istimewa.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="goto('packages')">Lihat Paket</button>
         <button class="btn-outline" onclick="goto('tracking')">Lacak Pesanan</button>
       </div>
     </div>
 
-    <!-- [ BERANDA ] Stats Bar -->
     <div class="stats-bar">
       <div class="stat-item"><div class="stat-num">15K+</div><div class="stat-label">Pelanggan Puas</div></div>
       <div class="stat-item"><div class="stat-num">24 Jam</div><div class="stat-label">Penyelesaian</div></div>
@@ -65,7 +46,70 @@
       <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Eco-Friendly</div></div>
     </div>
 
-    <!-- [ BERANDA ] Keunggulan Layanan -->
+    <!-- PROMO BANNER — dipindah tepat setelah hero/stats -->
+    <div class="promo-banner" id="promo-banner">
+      <div class="promo-text-area">
+        <div class="promo-badge-inline">🎉 PENAWARAN TERBATAS</div>
+        <h2 id="promo-title">Diskon 30% untuk Pelanggan Baru!</h2>
+        <p id="promo-desc">Daftar sekarang menjadi member FreshWave dan dapatkan diskon langsung pada order pertama Anda.</p>
+        <div class="promo-discount-badge" id="promo-discount-badge">
+          <span class="discount-label">HEMAT</span>
+          <span class="discount-value">30%</span>
+          <span class="discount-note">otomatis diterapkan</span>
+        </div>
+      </div>
+      <div class="promo-action-area">
+        <button id="promo-btn" class="btn-primary promo-cta-btn" onclick="handlePromoClick()">Daftar Gratis</button>
+        <div class="promo-trust" id="promo-trust-guest">🔒 Gratis selamanya · Tanpa kartu kredit</div>
+        <div class="promo-trust" id="promo-trust-user" style="display:none;">✅ Diskon aktif di setiap order Anda!</div>
+      </div>
+    </div>
+
+    <!-- ABOUT / CABANG SECTION -->
+    <div class="about-section">
+      <div class="about-inner">
+        <div class="about-text">
+          <h2>Tentang FreshWave 🌊</h2>
+          <p>FreshWave adalah layanan laundry profesional yang berdiri sejak 2019 di Palembang. Kami hadir dengan misi sederhana: memberikan cucian bersih, wangi, dan rapi kepada setiap keluarga Indonesia dengan harga yang terjangkau.</p>
+          <p>Dengan lebih dari 15.000 pelanggan yang telah mempercayai kami, FreshWave terus berkembang menggunakan teknologi mesin terkini dan deterjen ramah lingkungan yang aman untuk anak-anak dan hewan peliharaan.</p>
+          <p style="margin-bottom:0;">📸 Ikuti kami di Instagram: <a href="https://instagram.com/freshwave.id" target="_blank" style="color:var(--green); font-weight:600;">@freshwave.id</a><br>📱 WhatsApp Admin: <strong>0812-3456-7890</strong></p>
+        </div>
+        <div>
+          <div class="branch-title">📍 Lokasi Cabang Kami</div>
+          <div class="branch-list">
+            <div class="branch-item">
+              <div class="branch-icon">🏢</div>
+              <div>
+                <strong>Pusat — Sudirman, Palembang</strong>
+                <span>Jl. Jend. Sudirman No. 45, Palembang · Buka 07.00–21.00</span>
+              </div>
+            </div>
+            <div class="branch-item">
+              <div class="branch-icon">🏬</div>
+              <div>
+                <strong>Cabang Indralaya, Ogan Ilir</strong>
+                <span>Timbangan, Depan Kampus Unsri · Buka 08.00–20.00</span>
+              </div>
+            </div>
+            <div class="branch-item">
+              <div class="branch-icon">🏬</div>
+              <div>
+                <strong>Cabang Plaju, Palembang</strong>
+                <span>Jl. Kolonel H. Barlian No. 12 · Buka 08.00–20.00</span>
+              </div>
+            </div>
+            <div class="branch-item" style="background:#fff3e0; border-color:#ffb74d; cursor:pointer;" onclick="alert('Lowongan terbuka: Staff Laundry, Driver Pick-Up, dan Admin Online.\nKirim CV ke: career@freshwave.id\nAtau DM Instagram @freshwave.id')">
+              <div class="branch-icon">💼</div>
+              <div>
+                <strong>Lowongan Kerja (Klik untuk Info)</strong>
+                <span>Staff, Driver & Admin — Kirim CV ke career@freshwave.id</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <div class="section-title">Mengapa Pilih FreshWave?</div>
       <div class="section-sub">Kami hadir untuk memudahkan keseharian Anda</div>
@@ -103,16 +147,6 @@
       </div>
     </div>
 
-    <!-- [ BERANDA ] Promo Banner — klik buka Modal Register -->
-<div class="promo-banner">
-  <div>
-    <h2>Diskon 30% untuk <br> Pelanggan Baru! 🎉</h2>
-    <p>Daftar sekarang dan nikmati keistimewaan member FreshWave.</p>
-  </div>
-  <button id="promo-btn" class="btn-primary" onclick="handlePromoClick()">Daftar Gratis</button>
-</div>
-
-    <!-- [ BERANDA ] Testimoni Pelanggan -->
     <div class="section" style="padding-top:0">
       <div class="section-title">Kata Mereka 💬</div>
       <div class="section-sub">Ribuan pelanggan telah merasakan manfaatnya</div>
@@ -139,591 +173,465 @@
     </div>
 
   </div>
-  <!-- END HALAMAN 1 — BERANDA -->
 
-
-  <!-- ============================================================
-    HALAMAN 2 — PAKET & LAYANAN  (id="page-packages") arya satya
-    Konten:
-      • Header halaman
-      • Grid 6 kartu paket laundry
-    Interaksi:
-      • Klik kartu → viewDetail(id) → buka Halaman Detail
-      • Klik tombol "Pilih Paket" → selectPackage(id)
-          - Belum login? → buka Modal Login/Register
-          - Sudah login? → langsung ke Halaman Booking
-  ============================================================ -->
+  <!-- =================== HALAMAN PAKET =================== -->
   <div class="page" id="page-packages">
-
-    <!-- [ PAKET ] Header -->
     <div class="pkg-hero">
       <h1>Paket &amp; Layanan</h1>
-      <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
+      <p>Klik "Lihat Detail" untuk membalik kartu dan melihat penjelasan lengkap tiap layanan.</p>
     </div>
 
-    <!-- [ PAKET ] Grid Kartu Paket -->
     <div class="packages-grid">
 
-      <!-- [ PAKET ] Kartu 1: Basic Wash -->
-      <div class="pkg-card" onclick="viewDetail('basic')">
-        <div class="pkg-icon green">🧺</div>
-        <div class="pkg-name">Basic Wash</div>
-        <div class="pkg-tagline">Cucian harian berkualitas</div>
-        <div class="pkg-price">Rp 7.000 <span>/ kg</span></div>
-        <ul class="pkg-features">
-          <li>Cuci &amp; kering standar</li>
-          <li>Deterjen premium</li>
-          <li>Selesai 24 jam</li>
-          <li>Packaging rapi</li>
-        </ul>
-        <button class="pkg-btn" onclick="event.stopPropagation();selectPackage('basic')">Pilih Paket</button>
+      <!-- KARTU 1: Fast & Clean -->
+      <div class="pkg-card-container" id="card-express">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front">
+            <div class="pkg-icon green">⚡</div>
+            <div class="pkg-name">Fast &amp; Clean</div>
+            <div class="pkg-tagline">Cuci express handal harian</div>
+            <div class="pkg-price">Rp 9.000 <span>/ kg</span></div>
+            <ul class="pkg-features">
+              <li>Cuci &amp; Kering Mesin Otomatis</li>
+              <li>Deterjen Higienis Premium</li>
+              <li>Selesai dalam 12 Jam</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('express')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-express')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Fast &amp; Clean</div>
+            <p class="back-desc">Sangat cocok untuk pakaian kasual harian yang Anda butuhkan dengan cepat tanpa ribet. Cocok untuk baju kerja, kaos, dan celana harian.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>⏱ Durasi</span><span>12 Jam Selesai</span></div>
+              <div class="back-spec-item"><span>🔧 Metode</span><span>Mesin Cuci High-End</span></div>
+              <div class="back-spec-item"><span>🌸 Pewangi</span><span>Fresh Morning Dew</span></div>
+              <div class="back-spec-item"><span>📦 Packaging</span><span>Plastik Wrap Rapi</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('express')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-express')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- [ PAKET ] Kartu 2: Express Wash (Terpopuler) -->
-      <div class="pkg-card popular" onclick="viewDetail('express')">
-        <div class="pkg-badge">Terpopuler</div>
-        <div class="pkg-icon gold">⚡</div>
-        <div class="pkg-name">Express Wash</div>
-        <div class="pkg-tagline">Cepat, bersih, siap pakai</div>
-        <div class="pkg-price">Rp 12.000 <span>/ kg</span></div>
-        <ul class="pkg-features">
-          <li>Cuci, kering &amp; setrika</li>
-          <li>Selesai 6 jam</li>
-          <li>Deterjen aromaterapi</li>
-          <li>Antar jemput gratis</li>
-          <li>Tracking real-time</li>
-        </ul>
-        <button class="pkg-btn gold-btn" onclick="event.stopPropagation();selectPackage('express')">Pilih Paket</button>
+      <!-- KARTU 2: Luxury Deep Clean (Terpopuler) -->
+      <div class="pkg-card-container" id="card-premium">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front" style="border-color: var(--green)">
+            <div class="pkg-badge">Terpopuler</div>
+            <div class="pkg-icon gold">👑</div>
+            <div class="pkg-name">Luxury Deep Clean</div>
+            <div class="pkg-tagline">Proteksi serat kain &amp; wangi tahan lama</div>
+            <div class="pkg-price">Rp 18.000 <span>/ kg</span></div>
+            <ul class="pkg-features">
+              <li>Pembersihan noda mendalam</li>
+              <li>Setrika uap anti kusut</li>
+              <li>Selesai 24 Jam + Parfum Long-Lasting</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn gold-btn" onclick="selectPackage('premium')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-premium')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Luxury Deep Clean</div>
+            <p class="back-desc">Layanan andalan menggunakan teknologi pencerah warna dan pelembut khusus serat katun/sutra. Setrika uap memastikan pakaian bebas kusut sempurna.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>⏱ Durasi</span><span>24 Jam</span></div>
+              <div class="back-spec-item"><span>🔥 Setrika</span><span>Steam Ironing Pro</span></div>
+              <div class="back-spec-item"><span>🌹 Parfum</span><span>Royal Amber / Jasmine</span></div>
+              <div class="back-spec-item"><span>✨ Bonus</span><span>Pelembut Serat Premium</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('premium')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-premium')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- [ PAKET ] Kartu 3: Premium Care -->
-      <div class="pkg-card" onclick="viewDetail('premium')">
-        <div class="pkg-icon green">👔</div>
-        <div class="pkg-name">Premium Care</div>
-        <div class="pkg-tagline">Perawatan pakaian istimewa</div>
-        <div class="pkg-price">Rp 25.000 <span>/ item</span></div>
-        <ul class="pkg-features">
-          <li>Cuci tangan khusus</li>
-          <li>Dry cleaning tersedia</li>
-          <li>Penanganan jas &amp; gaun</li>
-          <li>Setrika &amp; starch</li>
-          <li>Packaging mewah</li>
-        </ul>
-        <button class="pkg-btn" onclick="event.stopPropagation();selectPackage('premium')">Pilih Paket</button>
+      <!-- KARTU 3: Leather & Shoes -->
+      <div class="pkg-card-container" id="card-sepatu">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front">
+            <div class="pkg-icon green">👟</div>
+            <div class="pkg-name">Leather &amp; Shoes</div>
+            <div class="pkg-tagline">Perawatan sepatu &amp; bahan kulit</div>
+            <div class="pkg-price">Rp 35.000 <span>/ pasang</span></div>
+            <ul class="pkg-features">
+              <li>Sikat Khusus Bahan Leather/Suede</li>
+              <li>Pemberian Nutrisi Kulit</li>
+              <li>Anti-Bacterial &amp; Deodorizer</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('sepatu')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-sepatu')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Leather &amp; Shoes</div>
+            <p class="back-desc">Menangani noda membandel pada midsole, outsole, serta perawatan kelembaban bahan tas dan jaket kulit asli agar tidak retak dan tetap lentur.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>🖐 Pengerjaan</span><span>Manual Hand-Wash</span></div>
+              <div class="back-spec-item"><span>💧 Proteksi</span><span>Water Repellent Spray</span></div>
+              <div class="back-spec-item"><span>🦠 Sanitasi</span><span>Anti-Bacterial Treatment</span></div>
+              <div class="back-spec-item"><span>⏱ Estimasi</span><span>2–3 Hari</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('sepatu')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-sepatu')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- [ PAKET ] Kartu 4: Cuci Sepatu -->
-      <div class="pkg-card" onclick="viewDetail('sepatu')">
-        <div class="pkg-icon green">👟</div>
-        <div class="pkg-name">Cuci Sepatu</div>
-        <div class="pkg-tagline">Sepatu kinclong kembali</div>
-        <div class="pkg-price">Rp 35.000 <span>/ pasang</span></div>
-        <ul class="pkg-features">
-          <li>Cuci dalam &amp; luar</li>
-          <li>Sikat premium</li>
-          <li>Deodorizer</li>
-          <li>Selesai 2 hari</li>
-        </ul>
-        <button class="pkg-btn" onclick="event.stopPropagation();selectPackage('sepatu')">Pilih Paket</button>
+      <!-- KARTU 4: Silk & Gown -->
+      <div class="pkg-card-container" id="card-gown">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front">
+            <div class="pkg-icon green">👗</div>
+            <div class="pkg-name">Silk &amp; Gown</div>
+            <div class="pkg-tagline">Gaun pesta, kebaya &amp; jas sutra</div>
+            <div class="pkg-price">Rp 50.000 <span>/ item</span></div>
+            <ul class="pkg-features">
+              <li>Metode Dry Clean Eksklusif</li>
+              <li>Gantungan khusus &amp; Cover Bag</li>
+              <li>Inspeksi Detail Manik/Payet</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('gown')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-gown')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Silk &amp; Gown</div>
+            <p class="back-desc">Ditangani secara personal oleh tim ahli kain halus. Payet, bordir, dan kehalusan sutra dijaga agar tidak rusak selama proses pencucian.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>🌿 Metode</span><span>Eco Dry-Cleaning</span></div>
+              <div class="back-spec-item"><span>📦 Packaging</span><span>Premium Garment Bag</span></div>
+              <div class="back-spec-item"><span>🪡 Inspeksi</span><span>Payet &amp; Bordir Check</span></div>
+              <div class="back-spec-item"><span>⏱ Pengerjaan</span><span>2 Hari</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('gown')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-gown')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- [ PAKET ] Kartu 5: Bed & Bath -->
-      <div class="pkg-card" onclick="viewDetail('bed')">
-        <div class="pkg-icon green">🛏️</div>
-        <div class="pkg-name">Bed &amp; Bath</div>
-        <div class="pkg-tagline">Sprei, selimut, handuk</div>
-        <div class="pkg-price">Rp 20.000 <span>/ item</span></div>
-        <ul class="pkg-features">
-          <li>Sprei &amp; bed cover</li>
-          <li>Selimut &amp; bantal</li>
-          <li>Handuk semua ukuran</li>
-          <li>Anti-bakteri treatment</li>
-        </ul>
-        <button class="pkg-btn" onclick="event.stopPropagation();selectPackage('bed')">Pilih Paket</button>
+      <!-- KARTU 5: Bedding Luxury -->
+      <div class="pkg-card-container" id="card-bed">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front">
+            <div class="pkg-icon green">🛏️</div>
+            <div class="pkg-name">Bedding Luxury</div>
+            <div class="pkg-tagline">Sprei sutra, bedcover &amp; selimut</div>
+            <div class="pkg-price">Rp 25.000 <span>/ item</span></div>
+            <ul class="pkg-features">
+              <li>Sterilisasi Tungau &amp; Bakteri</li>
+              <li>Pewangi aromaterapi relaksasi</li>
+              <li>Vacuum &amp; Lipat Rapi Sempurna</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('bed')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-bed')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Bedding Luxury</div>
+            <p class="back-desc">Cucian perlengkapan tidur yang super wangi meningkatkan kualitas tidur Anda. Sterilisasi tungau debu menggunakan suhu tinggi yang aman untuk kain.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>🦠 Fitur</span><span>Anti-Allergy Sanitize</span></div>
+              <div class="back-spec-item"><span>🌸 Scent</span><span>Lavender Calm Essence</span></div>
+              <div class="back-spec-item"><span>♨️ Metode</span><span>High-Temp Wash + Dry</span></div>
+              <div class="back-spec-item"><span>⏱ Waktu</span><span>24 Jam</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('bed')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-bed')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- [ PAKET ] Kartu 6: Langganan Bulanan -->
-      <div class="pkg-card" onclick="viewDetail('monthly')">
-        <div class="pkg-icon gold">🗓️</div>
-        <div class="pkg-name">Langganan Bulanan</div>
-        <div class="pkg-tagline">Hemat lebih banyak</div>
-        <div class="pkg-price">Rp 200.000 <span>/ bulan</span></div>
-        <ul class="pkg-features">
-          <li>Cuci hingga 30 kg</li>
-          <li>Setrika gratis</li>
-          <li>Prioritas penjemputan</li>
-          <li>Diskon 20% extra</li>
-          <li>Customer service dedikasi</li>
-        </ul>
-        <button class="pkg-btn gold-btn" onclick="event.stopPropagation();selectPackage('monthly')">Pilih Paket</button>
+      <!-- KARTU 6: Curtain & Carpet -->
+      <div class="pkg-card-container" id="card-carpet">
+        <div class="pkg-card-inner">
+          <div class="pkg-card-front">
+            <div class="pkg-icon green">🏡</div>
+            <div class="pkg-name">Curtain &amp; Carpet</div>
+            <div class="pkg-tagline">Pembersihan tirai &amp; karpet tebal</div>
+            <div class="pkg-price">Rp 40.000 <span>/ m²</span></div>
+            <ul class="pkg-features">
+              <li>Mesin Ekstraksi Noda Karpet</li>
+              <li>Pengeringan Sempurna Anti Apek</li>
+              <li>Penghilang Bau Hewan Peliharaan</li>
+            </ul>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('carpet')">Pilih Paket</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-carpet')">Lihat Detail</button>
+            </div>
+          </div>
+          <div class="pkg-card-back">
+            <div class="back-title">Detail Curtain &amp; Carpet</div>
+            <p class="back-desc">Solusi total menjaga kebersihan interior rumah dari debu bertahun-tahun pada tirai berat dan karpet bulu tebal. Cocok untuk rumah dengan hewan peliharaan.</p>
+            <div class="back-specs">
+              <div class="back-spec-item"><span>⚙️ Teknologi</span><span>High Pressure Extractor</span></div>
+              <div class="back-spec-item"><span>🌀 Deodorize</span><span>Fresh Ozone Treatment</span></div>
+              <div class="back-spec-item"><span>🐾 Pet-Safe</span><span>Eco-Friendly Formula</span></div>
+              <div class="back-spec-item"><span>⏱ Waktu</span><span>3–4 Hari</span></div>
+            </div>
+            <div class="pkg-action-footer">
+              <button class="pkg-btn" onclick="selectPackage('carpet')">Booking Sekarang</button>
+              <button class="detail-toggle-link" onclick="toggleCardFlip('card-carpet')">← Kembali</button>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
-  <!-- END HALAMAN 2 — PAKET & LAYANAN -->
 
-
-  <!-- ============================================================
-    HALAMAN 3 — DETAIL PAKET  (id="page-detail") ananda
-    Konten dinamis — diisi oleh fungsi viewDetail() di app.js
-    Konten:
-      • Tombol kembali ke Paket
-      • Tag, judul, dan deskripsi paket (diisi JS)
-      • Kotak harga + tombol Booking Sekarang
-          - Belum login? → buka Modal Login/Register
-          - Sudah login? → langsung ke Halaman Booking
-      • Grid inklusi paket (apa saja yang didapat)
-      • 5 langkah proses pengerjaan
-  ============================================================ -->
-  <div class="page" id="page-detail">
-
-    <!-- [ DETAIL ] Hero Header (isi dinamis dari JS) -->
-    <div class="detail-hero">
-      <div class="detail-hero-inner">
-        <button class="back-btn" onclick="goto('packages')">← Kembali</button>
-        <div class="detail-tag" id="detail-tag">Paket Populer</div>
-        <h1 id="detail-title">Express Wash</h1>
-        <p id="detail-sub">Layanan cuci kilat profesional untuk kebutuhan mendesak Anda</p>
-      </div>
-    </div>
-
-    <div class="detail-body">
-
-      <!-- [ DETAIL ] Harga & Tombol Booking -->
-      <div class="detail-price-box">
-        <div>
-          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:4px;font-weight:400">Harga mulai dari</div>
-          <div class="big-price" id="detail-price">Rp 12.000 <span>/ kg</span></div>
-        </div>
-        <button class="btn-primary" id="detail-book-btn" onclick="bookFromDetail()">Booking Sekarang</button>
-      </div>
-
-      <!-- [ DETAIL ] Inklusi Paket -->
-      <div class="detail-includes">
-        <h3>Yang Termasuk dalam Paket</h3>
-        <div class="include-grid" id="detail-includes-grid">
-          <div class="include-item"><div class="dot"></div><div><p>Cuci &amp; Kering</p><span>Mesin cuci modern berkapasitas besar</span></div></div>
-          <div class="include-item"><div class="dot"></div><div><p>Setrika Profesional</p><span>Setrika uap untuk hasil rapi sempurna</span></div></div>
-          <div class="include-item"><div class="dot"></div><div><p>Deterjen Aromaterapi</p><span>Wangi tahan lama, aman untuk kulit sensitif</span></div></div>
-          <div class="include-item"><div class="dot"></div><div><p>Antar Jemput Gratis</p><span>Radius 10 km dari pusat kota</span></div></div>
-        </div>
-      </div>
-
-      <!-- [ DETAIL ] Proses Pengerjaan (5 langkah) -->
-      <div class="process-steps">
-        <h3>Proses Pengerjaan</h3>
-        <div class="step"><div class="step-num">1</div><div><div class="step-title">Penjemputan</div><div class="step-desc">Driver kami menjemput cucian Anda sesuai jadwal yang dipilih.</div></div></div>
-        <div class="step"><div class="step-num">2</div><div><div class="step-title">Sortir &amp; Pengecekan</div><div class="step-desc">Pakaian dipisahkan berdasarkan warna dan jenis bahan untuk penanganan optimal.</div></div></div>
-        <div class="step"><div class="step-num">3</div><div><div class="step-title">Proses Pencucian</div><div class="step-desc">Dicuci dengan deterjen premium menggunakan mesin berteknologi tinggi.</div></div></div>
-        <div class="step"><div class="step-num">4</div><div><div class="step-title">Pengeringan &amp; Setrika</div><div class="step-desc">Dikeringkan sempurna lalu disetrika dengan rapi oleh tim profesional kami.</div></div></div>
-        <div class="step"><div class="step-num">5</div><div><div class="step-title">Pengiriman</div><div class="step-desc">Pakaian dikemas rapi dan diantarkan kembali ke alamat Anda.</div></div></div>
-      </div>
-
-    </div>
-  </div>
-  <!-- END HALAMAN 3 — DETAIL PAKET -->
-
-
-  <!-- ============================================================
-    HALAMAN 4 — BOOKING  (id="page-booking") reza
-    FITUR BARU:
-      • Pilih lebih dari 1 paket sekaligus + qty/berat per paket
-      • Ringkasan harga real-time
-      • Diskon 30% otomatis untuk pengguna baru (isNewUser)
-      • Pilihan metode pembayaran (Transfer / COD / QRIS)
-      • Tombol "Konfirmasi via WhatsApp" → kirim pesan ke admin
-    Semua logika di laundry.js bagian BOOKING BARU
-  ============================================================ -->
+  <!-- =================== HALAMAN BOOKING =================== -->
   <div class="page" id="page-booking">
-
-    <!-- [ BOOKING ] Header halaman -->
-    <div class="book-hero">
-      <h1>Booking Layanan</h1>
-      <p>Pilih paket, isi data, dan konfirmasi langsung ke WhatsApp admin</p>
-    </div>
-
-    <div class="booking-wrap">
-      <div class="booking-cols">
-
-        <!-- ── KOLOM KIRI: Form ── -->
-        <div class="booking-left">
-
-          <!-- [ BOOKING ] Bagian 1: Pilih Paket (multi-pilih) -->
-          <div class="form-card">
-            <div class="form-section-head">
-              <span class="form-section-num">1</span>
-              <div>
-                <h3>Pilih Paket</h3>
-                <p>Bisa pilih lebih dari satu paket sekaligus</p>
-              </div>
-            </div>
-
-            <!-- Daftar paket yang bisa dipilih — ditampilkan dinamis oleh JS -->
-            <div id="pkg-checklist" class="pkg-checklist"></div>
-
-            <!-- Tombol tambah paket lagi -->
-            <button class="add-pkg-btn" onclick="goto('packages')">+ Tambah dari halaman paket</button>
+    <div class="booking-container">
+      <div class="booking-card">
+        <h2>📋 Formulir Penjemputan</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="book-name">
           </div>
-
-          <!-- [ BOOKING ] Bagian 2: Data Diri -->
-          <div class="form-card">
-            <div class="form-section-head">
-              <span class="form-section-num">2</span>
-              <div>
-                <h3>Data Diri</h3>
-                <p>Informasi penjemputan cucian</p>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Nama Lengkap</label>
-                <input type="text" id="book-name" placeholder="Masukkan nama Anda">
-              </div>
-              <div class="form-group">
-                <label>No. WhatsApp</label>
-                <input type="tel" id="book-phone" placeholder="08xxxxxxxxxx">
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Alamat Penjemputan</label>
-              <input type="text" id="book-address" placeholder="Jl. Contoh No. 123, Palembang">
-            </div>
+          <div class="form-group">
+            <label>No. Telepon / WhatsApp</label>
+            <input type="tel" id="book-phone">
           </div>
-
-          <!-- [ BOOKING ] Bagian 3: Jadwal -->
-          <div class="form-card">
-            <div class="form-section-head">
-              <span class="form-section-num">3</span>
-              <div>
-                <h3>Jadwal Penjemputan</h3>
-                <p>Pilih tanggal dan waktu yang tersedia</p>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Tanggal</label>
-                <input type="date" id="book-date">
-              </div>
-              <div class="form-group">
-                <label>Waktu</label>
-                <select id="book-time">
-                  <option value="">Pilih waktu</option>
-                  <option>08:00 - 10:00</option>
-                  <option>10:00 - 12:00</option>
-                  <option>13:00 - 15:00</option>
-                  <option>15:00 - 17:00</option>
-                  <option>17:00 - 19:00</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Catatan Khusus (opsional)</label>
-              <textarea id="book-notes" placeholder="Contoh: ada noda di kemeja putih, tolong perhatikan..."></textarea>
-            </div>
+          <div class="form-group">
+            <label>Tanggal Penjemputan</label>
+            <input type="date" id="book-date">
           </div>
-
-          <!-- [ BOOKING ] Bagian 4: Metode Pembayaran -->
-          <div class="form-card">
-            <div class="form-section-head">
-              <span class="form-section-num">4</span>
-              <div>
-                <h3>Metode Pembayaran</h3>
-                <p>Pembayaran dilakukan saat cucian diantarkan kembali</p>
-              </div>
-            </div>
-
-            <!-- Radio pilihan pembayaran — nilai disimpan JS -->
-            <div class="pay-options">
-
-              <!-- Opsi 1: Transfer Bank -->
-              <label class="pay-option" id="pay-transfer">
-                <input type="radio" name="payment" value="Transfer Bank" onchange="selectPayment(this)">
-                <div class="pay-icon">🏦</div>
-                <div class="pay-info">
-                  <div class="pay-name">Transfer Bank</div>
-                  <div class="pay-desc">BCA / Mandiri / BRI — konfirmasi ke admin WA</div>
-                </div>
-                <div class="pay-check" id="pc-transfer"></div>
-              </label>
-
-              <!-- Opsi 2: COD (bayar di tempat) -->
-              <label class="pay-option" id="pay-cod">
-                <input type="radio" name="payment" value="COD (Bayar di Tempat)" onchange="selectPayment(this)">
-                <div class="pay-icon">💵</div>
-                <div class="pay-info">
-                  <div class="pay-name">COD — Bayar di Tempat</div>
-                  <div class="pay-desc">Bayar tunai saat cucian diantar kembali</div>
-                </div>
-                <div class="pay-check" id="pc-cod"></div>
-              </label>
-
-              <!-- Opsi 3: QRIS -->
-              <label class="pay-option" id="pay-qris">
-                <input type="radio" name="payment" value="QRIS" onchange="selectPayment(this)">
-                <div class="pay-icon">📱</div>
-                <div class="pay-info">
-                  <div class="pay-name">QRIS</div>
-                  <div class="pay-desc">GoPay, OVO, Dana, ShopeePay, dll</div>
-                </div>
-                <div class="pay-check" id="pc-qris"></div>
-              </label>
-
-            </div>
+          <div class="form-group">
+            <label>Jam Penjemputan (Interval 1 Jam)</label>
+            <select id="book-time">
+              <option value="08:00 - 09:00">08:00 - 09:00</option>
+              <option value="09:00 - 10:00">09:00 - 10:00</option>
+              <option value="10:00 - 11:00">10:00 - 11:00</option>
+              <option value="11:00 - 12:00">11:00 - 12:00</option>
+              <option value="13:00 - 14:00">13:00 - 14:00</option>
+              <option value="14:00 - 15:00">14:00 - 15:00</option>
+              <option value="15:00 - 16:00">15:00 - 16:00</option>
+              <option value="16:00 - 17:00">16:00 - 17:00</option>
+            </select>
           </div>
-
-        </div>
-        <!-- END KOLOM KIRI -->
-
-        <!-- ── KOLOM KANAN: Ringkasan Harga ── -->
-        <div class="booking-right">
-          <div class="summary-sticky">
-
-            <!-- Ringkasan paket yang dipilih -->
-            <div class="summary-card">
-              <h3>Ringkasan Pesanan</h3>
-
-              <!-- Daftar item paket yang dipilih — diisi JS -->
-              <div id="summary-items" class="summary-items">
-                <div class="summary-empty">Belum ada paket dipilih</div>
-              </div>
-
-              <div class="summary-divider"></div>
-
-              <!-- Subtotal sebelum diskon -->
-              <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="summary-subtotal">Rp 0</span>
-              </div>
-
-              <!-- Baris diskon 30% — hanya tampil jika pengguna baru -->
-              <div class="summary-row discount-row" id="discount-row" style="display:none">
-                <span>🎉 Diskon Pengguna Baru (30%)</span>
-                <span id="summary-discount" class="discount-val">- Rp 0</span>
-              </div>
-
-              <div class="summary-divider"></div>
-
-              <!-- Total akhir -->
-              <div class="summary-row total-row">
-                <span>Total Bayar</span>
-                <span id="summary-total">Rp 0</span>
-              </div>
-
-              <!-- Catatan estimasi -->
-              <div class="summary-note">
-                <span>⏱</span> Estimasi selesai: <strong>24 jam</strong> sejak penjemputan
-              </div>
-
-              <!-- Badge diskon pengguna baru -->
-              <div class="new-user-badge" id="new-user-badge" style="display:none">
-                🎉 Kamu mendapat diskon 30% sebagai pengguna baru!
-              </div>
-            </div>
-
-            <!-- Tombol konfirmasi via WA -->
-            <button class="wa-confirm-btn" onclick="submitBooking()">
-              <span>💬</span> Konfirmasi via WhatsApp
-            </button>
-            <p class="wa-note">Admin akan membalas & mengirimkan kode tracking pesananmu</p>
-
+          <div class="form-group full">
+            <label>Alamat Lengkap Rumah</label>
+            <textarea id="book-address" rows="3" placeholder="Nama jalan, nomor rumah, RT/RW..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Metode Pembayaran</label>
+            <select id="book-payment" onchange="selectedPayment = this.value">
+              <option value="">-- Pilih Metode --</option>
+              <option value="COD">Tunai saat Antar/Jemput (COD)</option>
+              <option value="QRIS">QRIS / Transfer Bank</option>
+            </select>
           </div>
         </div>
-        <!-- END KOLOM KANAN -->
 
+        <div style="margin-top: 1.5rem;">
+          <label style="font-size:0.85rem; font-weight:600; color:var(--mid); margin-bottom:8px; display:block;">Pilihan Notifikasi:</label>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <input type="checkbox" id="notify-wa" checked style="width:auto; cursor:pointer;">
+            <label for="notify-wa" style="font-size:0.85rem; cursor:pointer; color:var(--dark);">Kirim Detail Booking Otomatis ke WhatsApp Admin</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-card" style="background: var(--white);">
+        <h3>Ringkasan Layanan</h3>
+        <div id="pkg-checklist" style="margin: 1rem 0; display:flex; flex-direction:column; gap:10px;"></div>
+        <div id="summary-items" style="border-top:1px solid var(--border); padding-top:10px;"></div>
+        <button class="modal-btn" onclick="submitBooking()" style="margin-top:1.5rem;">Konfirmasi Order</button>
       </div>
     </div>
   </div>
-  <!-- END HALAMAN 4 — BOOKING -->
 
+  <!-- =================== HALAMAN TRACKING =================== -->
+  <div class="page" id="page-tracking">
+    <div class="track-box">
+      <h2>🔍 Lacak Cucian</h2>
+      <p>Masukkan ID Pesanan Anda untuk melihat status pengerjaan laundry secara real-time.</p>
+      <div class="track-search">
+        <input type="text" id="track-input" placeholder="Contoh: FW-2026-0001">
+        <button onclick="doTrack()">Lacak</button>
+      </div>
 
-  <!-- ============================================================
-    MODAL — KONFIRMASI BOOKING BERHASIL  (id="success-overlay") reza
-    Muncul setelah tombol WA diklik & validasi lolos.
-    Konten:
-      • Nomor pesanan sementara
-      • Info bahwa kode tracking akan dikirim admin via WA
-      • Tombol buka WA admin (window.open ke wa.me)
-      • Tombol lacak pesanan
-  ============================================================ -->
+      <div id="track-result" style="display:none; text-align:left; border-top:1px solid var(--border); padding-top:1.5rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:1rem; align-items:center;">
+          <div>
+            <h4 id="res-id" style="color:var(--green);">FW-XXXX</h4>
+            <small id="res-date" style="color:var(--muted);"></small>
+          </div>
+          <span id="res-status" style="background:var(--green); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:100px; font-weight:600;">Proses</span>
+        </div>
+        <p style="font-size:0.9rem; margin-bottom:1rem;"><strong>Pelanggan:</strong> <span id="res-name"></span></p>
+        
+        <div id="wa-backup-area" style="margin-bottom:1.5rem; display:none;">
+          <div style="background: #e3f2fd; padding:10px; border-radius:8px; border:1px solid #90caf9; font-size:0.8rem; color:#1565c0; margin-bottom:8px;">
+            ℹ️ Anda belum mengirimkan rincian pesanan ini ke WhatsApp Admin.
+          </div>
+          <button class="wa-open-btn" id="wa-backup-btn" style="padding:10px; font-size:0.85rem;">💬 Kirim Rincian &amp; Chat Admin Sekarang</button>
+        </div>
+
+        <!-- Tombol chat WA admin yang selalu muncul -->
+        <div id="wa-always-area" style="margin-bottom:1.5rem;">
+          <button class="wa-open-btn" id="wa-always-btn" style="padding:10px; font-size:0.85rem; background:#128c7e;">💬 Chat Admin WhatsApp</button>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--mid); line-height:1.6;">
+          <strong>Detail Paket:</strong>
+          <div id="res-items" style="margin-top:4px; padding-left:10px; border-left:2px solid var(--border);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== HALAMAN PROFIL =================== -->
+  <div class="page" id="page-profile">
+    <div class="profile-box">
+      <h2>👤 Pengaturan Profil Member</h2>
+      <div class="profile-avatar-area">
+        <div class="profile-avatar-big" id="profile-avatar-img">U</div>
+        <label class="avatar-edit-label" for="avatar-file-input">📷 Ubah Foto Profil</label>
+        <input type="file" id="avatar-file-input" class="avatar-edit-input" accept="image/*" onchange="handleAvatarChange(this)">
+      </div>
+      <div class="form-grid" style="grid-template-columns:1fr;">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="prof-name">
+        </div>
+        <div class="form-group">
+          <label>Nomor Telepon / WhatsApp</label>
+          <input type="tel" id="prof-phone">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="prof-email">
+        </div>
+        <div class="form-group">
+          <label>Alamat Default Pengiriman</label>
+          <textarea id="prof-address" rows="3"></textarea>
+        </div>
+        <button class="modal-btn" onclick="saveProfileData()">Simpan Perubahan</button>
+        <button class="modal-btn" style="background:transparent; color:var(--muted); border:1px solid var(--border); margin-top:0;" onclick="goto('home')">Kembali ke Beranda</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== MODAL AUTH =================== -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-tabs">
+        <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">Masuk</div>
+        <div class="modal-tab" id="tab-register" onclick="switchTab('register')">Daftar Akun</div>
+      </div>
+
+      <!-- FORM LOGIN -->
+      <div id="form-login">
+        <div class="modal-form-group">
+          <label>Email atau Nomor Telepon</label>
+          <input type="text" id="login-identifier" placeholder="Masukkan Email atau No HP">
+        </div>
+        <div class="modal-form-group" id="login-password-field">
+          <label>Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-password" placeholder="Masukkan password Anda">
+            <button type="button" class="eye-btn" onclick="togglePasswordVisibility('login-password')" title="Tampilkan/Sembunyikan">👁</button>
+          </div>
+        </div>
+        <a class="forgot-link" onclick="triggerForgotPassword()">Lupa Password?</a>
+        <button class="modal-btn" onclick="doLogin()">Masuk Sekarang</button>
+        <div class="modal-divider"><span>atau</span></div>
+        <button class="modal-btn-secondary" onclick="doLoginWithoutPassword()">⚡ Masuk Cepat (Tanpa Password)</button>
+      </div>
+
+      <!-- FORM REGISTER -->
+      <div id="form-register" style="display:none">
+        <div class="modal-form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="reg-name" placeholder="Nama lengkap Anda">
+        </div>
+        <div class="modal-form-group">
+          <label>No. Telepon / WhatsApp</label>
+          <input type="tel" id="reg-phone" placeholder="08xxxxxxxxxx">
+        </div>
+        <div class="modal-form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="email@contoh.com">
+        </div>
+        <div class="modal-form-group">
+          <label>Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="reg-password" placeholder="Minimal 8 karakter">
+            <button type="button" class="eye-btn" onclick="togglePasswordVisibility('reg-password')" title="Tampilkan/Sembunyikan">👁</button>
+          </div>
+        </div>
+        <button class="modal-btn" onclick="doRegister()">Buat Akun Gratis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== SUCCESS OVERLAY =================== -->
   <div class="success-overlay" id="success-overlay">
     <div class="success-box">
-      <div class="success-icon">✅</div>
-      <h2>Pesanan Dikirim!</h2>
-      <!-- Nomor order sementara — kode tracking resmi dari admin WA -->
-      <p>Pesanan kamu sudah dikirim ke WhatsApp admin FreshWave. Admin akan segera membalas dan mengirimkan <strong>kode tracking</strong> resmimu.</p>
-      <div class="order-id">No. Sementara: <span id="order-id-display">FW-2024-0042</span></div>
-      <!-- Tombol buka WA — href diisi JS saat submitBooking() -->
-      <a id="wa-open-btn" href="#" target="_blank" class="wa-open-btn">
-        Buka WhatsApp Admin
-      </a>
-      <button onclick="afterBooking()" style="background:var(--green-light);color:var(--green);border:none;padding:12px;border-radius:10px;width:100%;font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;margin-top:8px">
-        Lacak Pesanan Saya
-      </button>
+      <span class="success-icon">✨</span>
+      <h2>Booking Berhasil!</h2>
+      <p>Pesanan Anda telah kami catat dalam antrean prioritas sistem.</p>
+      <div class="order-id" id="display-order-id">FW-2026-0001</div>
+      <a id="wa-share-btn" class="wa-open-btn" target="_blank" href="#">💬 Hubungi Admin via WhatsApp</a>
+      <button class="modal-btn" style="background:transparent; color:var(--muted); margin-top:10px;" onclick="afterBooking()">Tutup &amp; Lacak Pesanan</button>
     </div>
   </div>
 
-
-  <!-- ============================================================
-    HALAMAN 5 — TRACKING  (id="page-tracking") moses
-    Konten:
-      • Header halaman
-      • Input nomor pesanan + tombol lacak
-      • Hasil tracking (tersembunyi, muncul setelah pencarian):
-          - Header: nomor order, nama paket, badge status
-          - Timeline 5 langkah dengan status visual:
-              done = hijau | active = kuning | pending = abu
-      • Info nomor contoh untuk dicoba
-    Data dummy di app.js: FW-2024-0001 | FW-2024-0002
-  ============================================================ -->
-  <div class="page" id="page-tracking">
-
-    <!-- [ TRACKING ] Header -->
-    <div class="track-hero">
-      <h1>Lacak Pesanan</h1>
-      <p>Masukkan nomor pesanan untuk melihat status cucian Anda</p>
-    </div>
-
-    <!-- [ TRACKING ] Input Nomor Pesanan -->
-    <div class="track-search">
-      <div class="track-input-wrap">
-        <input type="text" id="track-input" placeholder="Contoh: FW-2024-0001" value="">
-        <button onclick="doTrack()">Lacak Sekarang</button>
+  <!-- =================== FOOTER =================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Fresh<span>Wave</span></h3>
+        <p>Layanan laundry profesional terpercaya dengan teknologi ramah lingkungan. Menjaga kebersihan pakaian dan kenyamanan hidup Anda setiap hari.</p>
+      </div>
+      <div>
+        <h4 class="footer-title">Lokasi &amp; Kontak</h4>
+        <ul class="footer-links">
+          <li>📍 <strong>Pusat:</strong> Jl. Jend. Sudirman No. 45, Palembang</li>
+          <li>📍 <strong>Cabang Indralaya:</strong> Timbangan, Ogan Ilir (Depan Unsri)</li>
+          <li>📍 <strong>Cabang Plaju:</strong> Jl. Kolonel H. Barlian No. 12</li>
+          <li>📱 WhatsApp: 0812-3456-7890</li>
+          <li>📸 Instagram: <a href="https://instagram.com/freshwave.id" target="_blank">@freshwave.id</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Informasi</h4>
+        <ul class="footer-links">
+          <li><a onclick="goto('home')">Tentang FreshWave</a></li>
+          <li><a onclick="goto('packages')">Paket &amp; Layanan</a></li>
+          <li>💼 <a onclick="alert('Lowongan Terbuka!\n- Staff Laundry\n- Driver Pick-Up\n- Admin Online\n\nKirim CV ke: career@freshwave.id\nAtau DM Instagram: @freshwave.id')">Buka Loker (Karir)</a></li>
+          <li>🎉 Promo Aktif: Diskon 30% Member Baru</li>
+        </ul>
       </div>
     </div>
-
-    <!-- [ TRACKING ] Hasil Lacak (hidden by default, tampil setelah doTrack()) -->
-    <div class="track-result" id="track-result" style="display:none">
-      <div class="track-card">
-
-        <!-- Header Kartu: nomor order, daftar paket, status -->
-        <div class="track-header">
-          <div>
-            <div class="track-id" id="tr-id">FW-2024-0001</div>
-            <!-- tr-name: jika 1 paket → "Express Wash — 3.5 kg"
-                          jika 2+ paket → "3 Paket (Basic Wash, Express Wash, ...)" -->
-            <div class="track-name" id="tr-name">Express Wash — 3.5 kg</div>
-            <!-- Daftar paket detail — hanya muncul jika paket > 1 -->
-            <div id="tr-pkg-list" class="tr-pkg-list" style="display:none"></div>
-          </div>
-          <div class="status-badge" id="tr-status">Dalam Proses</div>
-        </div>
-
-        <!-- Timeline 5 Langkah -->
-        <div class="track-timeline">
-          <div class="timeline-item">
-            <div class="tl-left"><div class="tl-dot done" id="tl1-dot"></div><div class="tl-line done" id="tl1-line"></div></div>
-            <div class="tl-content"><div class="tl-title" id="tl1-t">✓ Pesanan Diterima</div><div class="tl-time" id="tl1-time">Hari ini, 08:30</div><div class="tl-note">Driver sudah menjemput cucian Anda</div></div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-left"><div class="tl-dot done" id="tl2-dot"></div><div class="tl-line done" id="tl2-line"></div></div>
-            <div class="tl-content"><div class="tl-title" id="tl2-t">✓ Sortir &amp; Pengecekan</div><div class="tl-time" id="tl2-time">Hari ini, 09:15</div><div class="tl-note" id="tl2-note">Pakaian telah dipisah dan dicek kondisinya</div></div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-left"><div class="tl-dot active" id="tl3-dot"></div><div class="tl-line" id="tl3-line"></div></div>
-            <div class="tl-content"><div class="tl-title" id="tl3-t">🔄 Sedang Dicuci</div><div class="tl-time" id="tl3-time">Hari ini, ~10:00</div><div class="tl-note">Dalam proses pencucian menggunakan deterjen premium</div></div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-left"><div class="tl-dot" id="tl4-dot"></div><div class="tl-line" id="tl4-line"></div></div>
-            <div class="tl-content"><div class="tl-title muted" id="tl4-t">Pengeringan &amp; Setrika</div><div class="tl-time" id="tl4-time">Estimasi: 11:30</div></div>
-          </div>
-          <div class="timeline-item">
-            <div class="tl-left"><div class="tl-dot" id="tl5-dot"></div></div>
-            <div class="tl-content"><div class="tl-title muted" id="tl5-t">Siap Diantarkan</div><div class="tl-time" id="tl5-time">Estimasi: 13:00</div></div>
-          </div>
-        </div>
-
-      </div>
+    <div class="footer-bottom">
+      &copy; 2026 FreshWave Laundry. All Rights Reserved.
     </div>
+  </footer>
 
-    <!-- [ TRACKING ] Info Contoh -->
-    <div style="max-width:600px;margin:2rem auto;padding:0 2rem">
-      <div style="text-align:center;color:var(--muted);font-size:0.85rem">
-        <p style="margin-bottom:0.5rem">Coba nomor order: <strong style="color:var(--green)">FW-2024-0001</strong> atau <strong style="color:var(--green)">FW-2024-0002</strong></p>
-        <p style="font-size:0.78rem;font-weight:300">Nomor order dikirim via WhatsApp setelah booking dikonfirmasi</p>
-      </div>
-    </div>
-
-  </div>
-  <!-- END HALAMAN 5 — TRACKING -->
-
-
-  <!-- ============================================================
-    MODAL — LOGIN & REGISTER  (id="auth-modal") login : febri , register : gasan (copy yg sesuai sm ap yg kalian dpt)
-    TIDAK muncul saat pertama buka halaman.
-    Dipicu oleh:
-      • Klik "Pilih Paket" di halaman Paket
-      • Klik "Booking Sekarang" di halaman Detail
-      • Klik "Masuk / Daftar" di navbar
-      • Klik "Daftar Gratis" di promo banner
-    Konten:
-      • Tab Masuk  → form: email + password
-      • Tab Daftar → form: nama, telepon, email, password
-      • Pesan error merah (tampil jika validasi gagal)
-      • Link beralih antar tab
-    Setelah berhasil → loginSuccess() dipanggil di JS
-      - Jika ada pendingAction = 'booking' → lanjut ke Booking
-      - Jika tidak ada → modal tutup saja
-  ============================================================ -->
-  <div class="modal-overlay" id="auth-modal">
-    <div class="modal">
-
-      <!-- [ MODAL ] Header dengan Tab Login/Register -->
-      <div class="modal-top">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <h2 id="modal-title">Selamat Datang</h2>
-        <p id="modal-sub">Masuk untuk melanjutkan booking Anda</p>
-        <div class="modal-tabs">
-          <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Masuk</button>
-          <button class="modal-tab" id="tab-register" onclick="switchTab('register')">Daftar</button>
-        </div>
-      </div>
-
-      <div class="modal-body">
-
-        <!-- [ MODAL ] Pesan Error -->
-        <div id="modal-error" class="modal-error">Email atau password salah. Coba lagi.</div>
-
-        <!-- [ MODAL ] Form Login ,febri -->
-        <div id="form-login">
-          <div class="modal-form-group">
-            <label>Email</label>
-            <input type="email" id="login-email" placeholder="email@contoh.com">
-          </div>
-          <div class="modal-form-group">
-            <label>Password</label>
-            <input type="password" id="login-password" placeholder="Kata sandi Anda">
-          </div>
-          <button class="modal-btn" onclick="doLogin()">Masuk Sekarang</button>
-          <div class="modal-divider"><span>atau</span></div>
-          <div class="modal-switch">Belum punya akun? <a onclick="switchTab('register')">Daftar gratis</a></div>
-        </div>
-
-        <!-- [ MODAL ] Form Register ,ghassan -->
-        <div id="form-register" style="display:none">
-          <div class="modal-form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" id="reg-name" placeholder="Nama Anda">
-          </div>
-          <div class="modal-form-group">
-            <label>No. Telepon / WhatsApp</label>
-            <input type="tel" id="reg-phone" placeholder="08xxxxxxxxxx">
-          </div>
-          <div class="modal-form-group">
-            <label>Email</label>
-            <input type="email" id="reg-email" placeholder="email@contoh.com">
-          </div>
-          <div class="modal-form-group">
-            <label>Password</label>
-            <input type="password" id="reg-password" placeholder="Minimal 8 karakter">
-          </div>
-          <button class="modal-btn" onclick="doRegister()">Buat Akun Gratis</button>
-          <div class="modal-switch">Sudah punya akun? <a onclick="switchTab('login')">Masuk</a></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <!-- END MODAL — LOGIN & REGISTER -->
+  <!-- =================== IN-PAGE TOAST NOTIFICATIONS =================== -->
+  <div id="toast-container" class="toast-container"></div>
 
   <script src="laundry.js"></script>
 </body>

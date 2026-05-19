@@ -1,5 +1,5 @@
 /* ================================================================
-   FRESHWAVE LAUNDRY — STYLESHEET
+   FRESHWAVE LAUNDRY — STYLESHEET (TEMA BIRU SEGAR & BERSIH)
    Struktur:
      1.  Reset & Variabel CSS
      2.  Base & Body
@@ -11,20 +11,15 @@
          5c. Section Wrapper & Keunggulan
          5d. Promo Banner
          5e. Testimoni
-     6.  Halaman: Paket & Layanan
-     7.  Halaman: Detail Paket
-     8.  Halaman: Booking
-     9.  Halaman: Tracking
-     10. Modal: Login & Register
-     11. Modal: Sukses Booking
-     12. State Login Navbar (User Info)
-     13. Responsive / Media Queries
-     14. lanjutan booking
+     6.  Halaman: Paket & Layanan (FLIP CARD STYLE)
+     7.  Halaman: Booking & Profil
+     8.  Halaman: Tracking
+     9.  Modal: Login & Register + Password Eyes
+     10. Footer Premium
 ================================================================ */
 
-
 /* ================================================================
-   1. RESET & VARIABEL CSS nashwa
+   1. RESET & VARIABEL CSS (TEMA BIRU SEGAR & RAMAH — LESS MAHAL)
 ================================================================ */
 * {
   box-sizing: border-box;
@@ -33,25 +28,28 @@
 }
 
 :root {
-  /* Warna Utama */
-  --green:       #1b5e45;
-  --green-mid:   #2d7a5e;
-  --green-light: #e6f4ef;
-  --green-pale:  #f2faf6;
+  /* Warna Utama: Biru Laundry Segar */
+  --green:       #1976d2; /* Biru Segar (sky blue feel) */
+  --green-mid:   #2196f3; /* Biru Medium */
+  --green-light: #e3f2fd; /* Light Blue */
+  --green-pale:  #f0f8ff; /* Alice Blue */
 
-  /* Aksen Emas */
-  --gold:        #c9963a;
-  --gold-light:  #fdf5e6;
+  /* Aksen Teal Cerah — lebih kasual dan segar */
+  --gold:        #0288d1; /* Teal Biru — ganti dari emas */
+  --gold-light:  #e1f5fe; /* Light Teal */
 
   /* Teks & UI */
-  --dark:   #141414;
-  --mid:    #555;
-  --muted:  #888;
-  --border: #e0e0e0;
+  --dark:   #1a2332;
+  --mid:    #4a5a6a;
+  --muted:  #7a8c9a;
+  --border: #c8dff0;
   --white:  #fff;
-  --bg:     #f8f8f5;
-}
+  --bg:     #f5f9ff;
 
+  /* Aksen warna booking sukses & WA — tetap hijau */
+  --wa-green: #25d366;
+  --wa-dark:  #1ebe57;
+}
 
 /* ================================================================
    2. BASE & BODY
@@ -68,7 +66,6 @@ body {
   overflow-x: hidden;
 }
 
-
 /* ================================================================
    3. NAVIGASI
 ================================================================ */
@@ -76,7 +73,7 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   height: 64px;
@@ -96,7 +93,7 @@ nav {
 }
 
 .nav-brand span {
-  color: var(--gold);
+  color: var(--green-mid);
 }
 
 .nav-links {
@@ -140,25 +137,21 @@ nav {
   transform: translateY(-1px);
 }
 
-
 /* ================================================================
-   4. SISTEM HALAMAN (PAGE SWITCHING)
-   Semua halaman disembunyikan secara default.
-   Halaman aktif mendapat class "active" via JavaScript.
+   4. SISTEM HALAMAN
 ================================================================ */
 .page {
   display: none;
   min-height: 100vh;
-  padding-top: 64px; /* tinggi navbar */
+  padding-top: 64px;
 }
 
 .page.active {
   display: block;
 }
 
-/* Tombol & utilitas global yang dipakai di beberapa halaman */
 .btn-primary {
-  background: var(--gold);
+  background: var(--green);
   color: var(--white);
   border: none;
   padding: 14px 32px;
@@ -172,9 +165,9 @@ nav {
 }
 
 .btn-primary:hover {
-  background: #b8832e;
+  background: var(--green-mid);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201, 150, 58, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .btn-outline {
@@ -195,12 +188,11 @@ nav {
   background: rgba(255, 255, 255, 0.1);
 }
 
-
 /* ================================================================
-   5a. HALAMAN BERANDA — Hero Section
+   5a. BERANDA — Hero Section
 ================================================================ */
 #page-home .hero {
-  background: linear-gradient(135deg, #1b5e45 0%, #2d7a5e 50%, #1b5e45 100%);
+  background: linear-gradient(135deg, #344b65 0%, #1976d2 40%, #0288d1 100%);
   padding: 7rem 2rem 5rem;
   text-align: center;
   position: relative;
@@ -211,14 +203,14 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 #page-home .hero-badge {
   display: inline-block;
-  background: rgba(201, 150, 58, 0.2);
-  border: 1px solid rgba(201, 150, 58, 0.5);
-  color: #f5c87a;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #e3f2fd;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 5px 14px;
@@ -238,12 +230,12 @@ nav {
 }
 
 #page-home .hero h1 em {
-  color: #f5c87a;
+  color: #b3e5fc;
   font-style: normal;
 }
 
 #page-home .hero p {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.1rem;
   max-width: 500px;
   margin: 0 auto 2.5rem;
@@ -256,19 +248,12 @@ nav {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  position: relative; /* Membuat elemen bisa diatur lapisannya */
-  z-index: 10;        /* Menaikkan tombol ke lapisan paling atas 
-                        agar tetap bisa diklik meski ada efek latar belakang */
-
-/* Pastikan juga tombol di dalamnya bisa diklik dengan lancar */
-.hero-btns button {
-    cursor: pointer;    /* Mengubah kursor menjadi bentuk tangan saat diarahkan */
+  position: relative;
+  z-index: 10;
 }
-}
-
 
 /* ================================================================
-   5b. HALAMAN BERANDA — Stats Bar
+   5b. BERANDA — Stats Bar & Keunggulan
 ================================================================ */
 .stats-bar {
   display: grid;
@@ -279,170 +264,48 @@ nav {
   padding: 1.5rem 2rem;
 }
 
-.stat-item {
-  padding: 0.5rem;
-}
+.stat-item { padding: 0.5rem; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--green); }
+.stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
 
-.stat-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--green);
-}
+.section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+.section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; font-weight: 300; }
 
-.stat-label {
-  font-size: 0.8rem;
-  color: var(--muted);
-  font-weight: 400;
-  margin-top: 2px;
-}
-
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.feature-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.25s; }
+.feature-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(25, 118, 210, 0.1); }
+.feat-icon { width: 48px; height: 48px; background: var(--green-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+.feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 
 /* ================================================================
-   5c. HALAMAN BERANDA — Section Wrapper & Keunggulan
-================================================================ */
-.section {
-  padding: 4rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--dark);
-  margin-bottom: 0.5rem;
-}
-
-.section-sub {
-  color: var(--muted);
-  font-size: 0.95rem;
-  margin-bottom: 2.5rem;
-  font-weight: 300;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.feature-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: all 0.25s;
-}
-
-.feature-card:hover {
-  border-color: var(--green);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(27, 94, 69, 0.1);
-}
-
-.feat-icon {
-  width: 48px;
-  height: 48px;
-  background: var(--green-light);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.feature-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.feature-card p {
-  font-size: 0.875rem;
-  color: var(--muted);
-  line-height: 1.6;
-  font-weight: 300;
-}
-
-
-/* ================================================================
-   5d. HALAMAN BERANDA — Promo Banner
+   5d. BERANDA — Promo Banner (Diskon 30%)
 ================================================================ */
 .promo-banner {
-  background: linear-gradient(120deg, #1b5e45, #2d7a5e);
+  background: linear-gradient(120deg, #1565c0, #0288d1);
   border-radius: 20px;
   padding: 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  margin: 0 2rem 4rem;
+  margin: 2rem auto;
+  max-width: 1100px;
   flex-wrap: wrap;
 }
+.promo-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--white); margin-bottom: 0.5rem; }
+.promo-banner p { color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; font-weight: 300; }
 
-.promo-banner h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
-
-.promo-banner p {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.95rem;
-  font-weight: 300;
-}
-
+.testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+.testi-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+.stars { color: #f59e0b; font-size: 1rem; margin-bottom: 0.75rem; }
+.testi-text { font-size: 0.875rem; color: var(--mid); line-height: 1.7; margin-bottom: 1rem; font-style: italic; font-weight: 300; }
+.testi-author { font-size: 0.8rem; font-weight: 600; color: var(--dark); }
+.testi-loc { font-size: 0.75rem; color: var(--muted); }
 
 /* ================================================================
-   5e. HALAMAN BERANDA — Testimoni
-================================================================ */
-.testimonials {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.testi-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.5rem;
-}
-
-.stars {
-  color: var(--gold);
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.testi-text {
-  font-size: 0.875rem;
-  color: var(--mid);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-  font-style: italic;
-  font-weight: 300;
-}
-
-.testi-author {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--dark);
-}
-
-.testi-loc {
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-
-/* ================================================================
-   6. HALAMAN: PAKET & LAYANAN arya satya
+   6. HALAMAN: PAKET & LAYANAN (3D EFFECT & FLIP DESIGN)
 ================================================================ */
 #page-packages .pkg-hero {
   background: var(--green-pale);
@@ -458,1130 +321,365 @@ nav {
   color: var(--green);
 }
 
-#page-packages .pkg-hero p {
-  color: var(--muted);
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  font-weight: 300;
-}
-
 .packages-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
   padding: 3rem 2rem;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.pkg-card {
-  background: var(--white);
+/* Perspektif Kontainer Kartu */
+.pkg-card-container {
+  perspective: 1000px;
+  height: 480px;
+}
+
+.pkg-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+/* Trigger Class Efek Membalik via Button */
+.pkg-card-container.flipped .pkg-card-inner {
+  transform: rotateY(180deg);
+}
+
+.pkg-card-front, .pkg-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   border: 1.5px solid var(--border);
   border-radius: 20px;
-  padding: 2rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+  background-color: var(--white);
+  padding: 2.2rem 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.pkg-card:hover {
+.pkg-card-back {
+  transform: rotateY(180deg);
+  background: var(--green-pale);
   border-color: var(--green);
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(27, 94, 69, 0.12);
 }
 
-/* Paket yang ditandai "terpopuler" */
-.pkg-card.popular {
-  border-color: var(--gold);
+/* Sisi Depan */
+.pkg-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin-bottom: 1.25rem; }
+.pkg-icon.green { background: var(--green-light); }
+.pkg-icon.gold  { background: var(--gold-light); }
+.pkg-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+.pkg-tagline { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; font-weight: 300; }
+.pkg-price { font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 0.25rem; }
+.pkg-price span { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+.pkg-features { list-style: none; margin: 1rem 0; display: flex; flex-direction: column; gap: 8px; }
+.pkg-features li { font-size: 0.85rem; color: var(--mid); display: flex; align-items: center; gap: 8px; }
+.pkg-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+/* Menyejajarkan bagian bawah tombol */
+.pkg-action-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+.pkg-btn {
+  width: 100%; background: var(--green); color: var(--white); border: none; padding: 12px; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.pkg-btn:hover { background: var(--green-mid); transform: translateY(-1px); }
+.gold-btn { background: var(--green-mid) !important; }
+.gold-btn:hover { background: var(--green) !important; }
+.detail-toggle-link {
+  text-align: center; font-size: 0.85rem; color: var(--green); font-weight: 600; cursor: pointer; text-decoration: underline; background: transparent; border: none;
+}
+
+/* Badge Terpopuler */
 .pkg-badge {
   position: absolute;
-  top: 16px;
+  top: -1px;
   right: 16px;
-  background: var(--gold);
+  background: var(--green);
   color: var(--white);
   font-size: 0.7rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 100px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 0 0 10px 10px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.pkg-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
-  margin-bottom: 1.25rem;
-}
-
-.pkg-icon.green { background: var(--green-light); }
-.pkg-icon.gold  { background: var(--gold-light); }
-
-.pkg-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.pkg-tagline {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 1.25rem;
-  font-weight: 300;
-}
-
-.pkg-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--green);
-  margin-bottom: 0.25rem;
-}
-
-.pkg-price span {
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--muted);
-}
-
-.pkg-features {
-  list-style: none;
-  margin: 1.25rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pkg-features li {
-  font-size: 0.85rem;
-  color: var(--mid);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 400;
-}
-
-.pkg-features li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
-
-.pkg-btn {
-  width: 100%;
-  background: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 1.5rem;
-}
-
-.pkg-btn:hover       { background: var(--green-mid); }
-.pkg-btn.gold-btn    { background: var(--gold); }
-.pkg-btn.gold-btn:hover { background: #b8832e; }
-
+/* Sisi Belakang */
+.back-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
+.back-desc { font-size: 0.9rem; color: var(--mid); line-height: 1.6; font-weight: 300; margin-bottom: 1.5rem; }
+.back-specs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.back-spec-item { font-size: 0.85rem; display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 6px; }
 
 /* ================================================================
-   7. HALAMAN: DETAIL PAKET ananda
+   7. HALAMAN: BOOKING & PROFIL
 ================================================================ */
-#page-detail .detail-hero {
-  background: var(--green);
-  padding: 4rem 2rem;
-  color: var(--white);
-}
+.booking-container { max-width: 1000px; margin: 3rem auto; padding: 0 2rem; display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.5rem; }
+.booking-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; }
+.booking-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: span 2; }
+.form-group label { font-size: 0.85rem; font-weight: 500; color: var(--mid); }
+.form-group input, .form-group select, .form-group textarea { padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; background: var(--white); color: var(--dark); transition: border 0.2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); outline: none; }
 
-#page-detail .detail-hero-inner {
-  max-width: 800px;
-  margin: 0 auto;
-}
+/* State Login Navbar User Info */
+.user-info { display: flex; align-items: center; gap: 0.75rem; }
+.user-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-transform: uppercase; border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--border); overflow: hidden; }
+.user-name { font-size: 0.875rem; font-weight: 600; color: var(--dark); }
+.logout-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+.logout-btn:hover { color: #d93838; border-color: #f5c2c2; background: #fff5f5; }
 
-.back-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: var(--white);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-bottom: 2rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.2s;
-}
-
-.back-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.detail-tag {
-  background: rgba(201, 150, 58, 0.25);
-  color: #f5c87a;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 5px 14px;
-  border-radius: 100px;
-  display: inline-block;
-  margin-bottom: 1rem;
-  letter-spacing: 0.05em;
-}
-
-#page-detail .detail-hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-#page-detail .detail-hero p {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 1rem;
-  font-weight: 300;
-}
-
-.detail-body {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-/* Kotak harga + tombol booking */
-.detail-price-box {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.big-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--green);
-}
-
-.big-price span {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--muted);
-}
-
-/* Grid inklusi paket */
-.detail-includes {
-  margin-bottom: 2rem;
-}
-
-.detail-includes h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.include-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.include-item {
-  background: var(--green-light);
-  border-radius: 10px;
-  padding: 1rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.include-item .dot {
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  border-radius: 50%;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-
-.include-item p {
-  font-size: 0.875rem;
-  color: var(--dark);
-  font-weight: 500;
-}
-
-.include-item span {
-  font-size: 0.775rem;
-  color: var(--muted);
-  font-weight: 300;
-}
-
-/* Langkah-langkah proses */
-.process-steps {
-  margin-bottom: 2rem;
-}
-
-.process-steps h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.step {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.step:last-child {
-  border-bottom: none;
-}
-
-.step-num {
-  width: 32px;
-  height: 32px;
-  background: var(--green);
-  color: var(--white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.step-title {
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 3px;
-}
-
-.step-desc {
-  font-size: 0.82rem;
-  color: var(--muted);
-  font-weight: 300;
-  line-height: 1.5;
-}
-
+/* Edit Profil Panel */
+.profile-box { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; max-width: 600px; margin: 3rem auto; }
+.profile-avatar-area { text-align: center; margin-bottom: 2rem; position: relative; }
+.profile-avatar-big { width: 90px; height: 90px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 2.5rem; display: inline-flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; border: 4px solid var(--white); box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+.avatar-edit-input { display: none; }
+.avatar-edit-label { display: block; font-size: 0.8rem; color: var(--green); font-weight: 600; cursor: pointer; }
 
 /* ================================================================
-   8. HALAMAN: BOOKING reza, css reza buat booking masih ado dibawah nomor 11,14
+   8. HALAMAN: TRACKING
 ================================================================ */
-#page-booking .book-hero {
-  background: var(--green-pale);
-  border-bottom: 1px solid var(--border);
-  padding: 2.5rem 2rem;
-  text-align: center;
-}
-
-#page-booking .book-hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--green);
-}
-
-#page-booking .book-hero p {
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 300;
-  margin-top: 0.35rem;
-}
-
-.booking-form {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
+.track-box { max-width: 550px; margin: 4rem auto; background: var(--white); border: 1px solid var(--border); border-radius: 24px; padding: 3rem 2.5rem; text-align: center; box-shadow: 0 8px 32px rgba(25, 118, 210, 0.05); }
+.track-search { display: flex; gap: 10px; margin: 1.5rem 0 2.5rem; }
+.track-search input { flex: 1; padding: 14px; border: 1.5px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 1rem; text-align: center; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
+.track-search input:focus { border-color: var(--green); outline: none; }
+.track-search button { background: var(--green); color: var(--white); border: none; padding: 0 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.track-search button:hover { background: var(--green-mid); }
 
 /* ================================================================
-   9. HALAMAN: TRACKING moses
+   9. MODAL: LOGIN & REGISTER + PASSWORD EYE + LUPA PASSWORD
 ================================================================ */
-#page-tracking .track-hero {
-  background: var(--dark);
-  padding: 3rem 2rem;
-  text-align: center;
-}
-
-#page-tracking .track-hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: var(--white);
-}
-
-#page-tracking .track-hero p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  margin-top: 0.35rem;
-  font-weight: 300;
-}
-
-.track-search {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem 0;
-}
-
-.track-input-wrap {
-  display: flex;
-  gap: 10px;
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 6px 6px 6px 16px;
-  align-items: center;
-}
-
-.track-input-wrap input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
-  color: var(--dark);
-  background: transparent;
-}
-
-.track-input-wrap button {
-  background: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.track-result {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 0 2rem 3rem;
-}
-
-.track-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.track-header {
-  background: var(--green);
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.track-id {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 4px;
-}
-
-.track-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--white);
-}
-
-/* Badge status pesanan */
-.status-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--white);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 100px;
-}
-
-.status-badge.done {
-  background: #2d9e6e;
-  color: var(--white);
-}
-
-/* Timeline tracking */
-.track-timeline {
-  padding: 2rem;
-}
-
-.timeline-item {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.timeline-item:last-child {
-  margin-bottom: 0;
-}
-
-.tl-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-}
-
-/* Titik timeline */
-.tl-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--border);
-  flex-shrink: 0;
-  border: 3px solid var(--white);
-  box-shadow: 0 0 0 2px var(--border);
-}
-
-.tl-dot.done   { background: var(--green); box-shadow: 0 0 0 2px rgba(27, 94, 69, 0.3); }
-.tl-dot.active { background: var(--gold);  box-shadow: 0 0 0 2px rgba(201, 150, 58, 0.3); }
-
-/* Garis penghubung timeline */
-.tl-line {
-  width: 2px;
-  background: var(--border);
-  flex: 1;
-  margin: 4px 0;
-}
-
-.tl-line.done {
-  background: var(--green);
-}
-
-.tl-content {
-  padding-bottom: 1.5rem;
-  flex: 1;
-}
-
-.tl-title       { font-weight: 600; font-size: 0.875rem; color: var(--dark); margin-bottom: 2px; }
-.tl-title.muted { color: var(--muted); }
-.tl-time        { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
-.tl-note        { font-size: 0.8rem; color: var(--mid); margin-top: 4px; font-weight: 300; }
-
-
-/* ================================================================
-   10. MODAL: LOGIN & REGISTER modal ini bentukan login dan register, untuk febri cssny masi ado dibawah
-================================================================ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 200;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-}
-
-.modal-overlay.open {
-  display: flex;
-}
-
-.modal {
-  background: var(--white);
-  border-radius: 24px;
-  width: 90%;
-  max-width: 440px;
-  overflow: hidden;
-  animation: modalIn 0.3s ease;
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to   { opacity: 1; transform: none; }
-}
-
-/* Header modal (hijau dengan tab) */
-.modal-top {
-  background: var(--green);
-  padding: 2rem 2rem 1.5rem;
-  text-align: center;
-  position: relative;
-}
-
-.modal-top h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--white);
-}
-
-.modal-top p {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.85rem;
-  font-weight: 300;
-  margin-top: 4px;
-}
-
-.modal-close {
-  position: absolute;
-  top: 14px; right: 16px;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: var(--white);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-/* Tab Masuk / Daftar */
-.modal-tabs {
-  display: flex;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 3px;
-  margin-top: 1rem;
-}
-
-.modal-tab {
-  flex: 1;
-  padding: 7px;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.6);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-
-.modal-tab.active {
-  background: var(--white);
-  color: var(--green);
-}
-
-/* Body modal (form) */
-.modal-body {
-  padding: 1.75rem 2rem 2rem;
-}
-
-.modal-form-group {
-  margin-bottom: 1rem;
-}
-
-.modal-form-group label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--mid);
-  margin-bottom: 5px;
-}
-
-.modal-form-group input {
-  width: 100%;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 11px 14px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.875rem;
-  color: var(--dark);
-  outline: none;
-  transition: border 0.2s;
-}
-
-.modal-form-group input:focus {
-  border-color: var(--green);
-}
-
-.modal-btn {
-  width: 100%;
-  background: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 13px;
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 0.5rem;
-}
-
-.modal-btn:hover {
-  background: var(--green-mid);
-}
-
-/* Pemisah "atau" */
-.modal-divider {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-  margin: 1rem 0;
-  position: relative;
-}
-
-.modal-divider::before {
-  content: '';
-  position: absolute;
-  top: 50%; left: 0; right: 0;
-  height: 1px;
-  background: var(--border);
-}
-
-.modal-divider span {
-  background: var(--white);
-  padding: 0 10px;
-  position: relative;
-}
-
-/* Link ganti tab */
-.modal-switch {
-  text-align: center;
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-top: 1rem;
-}
-
-.modal-switch a {
-  color: var(--green);
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* Pesan error validasi */
-.modal-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  margin-bottom: 1rem;
-  display: none;
-}
-
-.modal-error.show {
-  display: block;
-}
-
-
-/* ================================================================
-   11. MODAL: SUKSES BOOKING reza
-================================================================ */
-.success-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 300;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-}
-
-.success-overlay.open {
-  display: flex;
-}
-
-.success-box {
-  background: var(--white);
-  border-radius: 24px;
-  padding: 3rem 2rem;
-  text-align: center;
-  max-width: 380px;
-  width: 90%;
-  animation: modalIn 0.3s ease;
-}
-
-.success-icon {
-  width: 72px;
-  height: 72px;
-  background: var(--green-light);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  margin: 0 auto 1.25rem;
-}
-
-.success-box h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--green);
-  margin-bottom: 0.5rem;
-}
-
-.success-box p {
-  color: var(--muted);
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.order-id {
-  background: var(--green-light);
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 0.875rem;
-  color: var(--green);
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-}
-
-.success-box button {
-  background: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 13px 32px;
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-}
-
-
-/* ================================================================
-   12. STATE LOGIN NAVBAR — Info User (setelah berhasil login) febri
-================================================================ */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  background: var(--green);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.user-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--dark);
-}
-
-.logout-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.logout-btn:hover {
-  border-color: var(--dark);
-  color: var(--dark);
-}
-
-
-/* ================================================================
-   13. RESPONSIVE — Media Queries
-================================================================ */
-@media (max-width: 768px) {
-  /* Grid menjadi 1 kolom di mobile */
-  .features-grid,
-  .packages-grid,
-  .testimonials  { grid-template-columns: 1fr; }
-
-  /* Stats bar 2 kolom di mobile */
-  .stats-bar     { grid-template-columns: repeat(2, 1fr); }
-
-  /* Form booking kolom tunggal */
-  .form-row      { grid-template-columns: 1fr; }
-
-  /* Detail inklusi kolom tunggal */
-  .include-grid  { grid-template-columns: 1fr; }
-
-  /* Nav lebih rapat di mobile */
-  .nav-links     { gap: 1rem; }
-  .nav-links a   { font-size: 0.78rem; }
-}
-
-/* ================================================================
- 14.  BOOKING BARU — Multi-paket, Diskon, Pembayaran, WA reza
-================================================================ */
-
-/* Layout 2 kolom booking */
-.booking-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
-.booking-cols { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start; }
-
-/* Kartu form tiap bagian */
-.form-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 1.75rem 2rem;
-  margin-bottom: 1.25rem;
-}
-
-/* Nomor + judul bagian */
-.form-section-head {
-  display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem;
-}
-.form-section-num {
-  width: 32px; height: 32px; background: var(--green);
-  color: var(--white); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
-}
-.form-section-head h3 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
-.form-section-head p  { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
-
-/* Form row & group */
-.form-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--dark); margin-bottom: 6px; }
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 10px 14px; font-family: 'Outfit', sans-serif;
-  font-size: 0.875rem; color: var(--dark); background: var(--white);
-  outline: none; transition: border 0.2s;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus { border-color: var(--green); }
-.form-group textarea { resize: vertical; height: 80px; }
-
-/* ── Checklist paket ── */
-.pkg-checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem; }
-
-/* Satu baris paket dalam checklist */
-.pkg-check-item {
-  border: 1.5px solid var(--border);
-  border-radius: 14px; padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
-  cursor: pointer; transition: all 0.2s; background: var(--white);
-  user-select: none;
-}
-.pkg-check-item:hover  { border-color: var(--green); background: var(--green-light); }
-.pkg-check-item.active { border-color: var(--green); background: var(--green-light); }
-
-/* Checkbox visual custom */
-.pkg-checkbox {
-  width: 22px; height: 22px; border-radius: 6px;
-  border: 2px solid var(--border); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; transition: all 0.2s;
-}
-.pkg-check-item.active .pkg-checkbox { background: var(--green); border-color: var(--green); color: var(--white); }
-
-.pkg-check-emoji  { font-size: 1.5rem; flex-shrink: 0; }
-.pkg-check-info   { flex: 1; }
-.pkg-check-name   { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-.pkg-check-price  { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
-
-/* Input qty/berat per paket — muncul saat paket dicentang */
-.pkg-qty-wrap {
-  display: none; align-items: center; gap: 8px; flex-shrink: 0;
-}
-.pkg-check-item.active .pkg-qty-wrap { display: flex; }
-.pkg-qty-input {
-  width: 80px; border: 1.5px solid var(--border); border-radius: 8px;
-  padding: 6px 10px; font-family: 'Outfit', sans-serif;
-  font-size: 0.85rem; text-align: center; outline: none;
-  transition: border 0.2s;
-}
-.pkg-qty-input:focus { border-color: var(--green); }
-.pkg-qty-unit { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-
-/* Tombol tambah paket */
-.add-pkg-btn {
-  width: 100%; padding: 10px; border: 1.5px dashed var(--border);
-  border-radius: 10px; background: transparent;
-  font-family: 'Outfit', sans-serif; font-size: 0.875rem;
-  color: var(--muted); cursor: pointer; transition: all 0.2s;
-}
-.add-pkg-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
-
-/* ── Opsi Pembayaran ── */
-.pay-options { display: flex; flex-direction: column; gap: 10px; }
-.pay-option  {
-  border: 1.5px solid var(--border); border-radius: 14px;
-  padding: 14px 16px; cursor: pointer;
-  display: flex; align-items: center; gap: 12px;
-  transition: all 0.2s; background: var(--white);
-  user-select: none;
-}
-.pay-option:hover  { border-color: var(--green); background: var(--green-light); }
-.pay-option.active { border-color: var(--green); background: var(--green-light); }
-.pay-option input[type="radio"] { display: none; } /* sembunyikan radio asli */
-.pay-icon  { font-size: 1.5rem; flex-shrink: 0; }
-.pay-info  { flex: 1; }
-.pay-name  { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-.pay-desc  { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
-.pay-check {
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; transition: all 0.2s; flex-shrink: 0;
-}
-.pay-option.active .pay-check { background: var(--green); border-color: var(--green); color: var(--white); }
-.pay-option.active .pay-check::after { content: '✓'; }
-
-/* ── Kolom kanan: Summary sticky ── */
-.booking-right    { position: sticky; top: 80px; }
-
-.summary-card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 20px; padding: 1.5rem; margin-bottom: 1rem;
-}
-.summary-card h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem;
-}
-
-/* Daftar paket terpilih di summary */
-.summary-items  { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 8px; }
-.summary-empty  { font-size: 0.85rem; color: var(--muted); text-align: center; padding: 1rem; font-weight: 300; }
-
-/* Satu baris item di summary */
-.summary-item-row {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  font-size: 0.85rem; gap: 8px;
-}
-.si-name   { color: var(--dark); font-weight: 500; flex: 1; }
-.si-detail { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
-.si-price  { color: var(--green); font-weight: 600; white-space: nowrap; }
-
-.summary-divider { height: 1px; background: var(--border); margin: 10px 0; }
-
-.summary-row {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.875rem; padding: 4px 0; color: var(--mid);
-}
-.total-row { font-weight: 700; font-size: 1rem; color: var(--dark); margin-top: 4px; }
-.total-row span:last-child { color: var(--green); font-size: 1.1rem; }
-
-/* Baris diskon (hijau) */
-.discount-row { color: var(--green); }
-.discount-val { font-weight: 700; }
-
-/* Catatan estimasi */
-.summary-note {
-  margin-top: 12px; background: var(--green-light);
-  border-radius: 8px; padding: 10px 12px;
-  font-size: 0.8rem; color: var(--green-mid);
-}
-.summary-note strong { color: var(--green); }
-
-/* Badge diskon pengguna baru */
-.new-user-badge {
-  margin-top: 10px; background: var(--gold-light);
-  border: 1px solid var(--gold); border-radius: 10px;
-  padding: 10px 12px; font-size: 0.8rem;
-  color: #8a5a00; font-weight: 500; text-align: center;
-}
-
-/* Tombol konfirmasi WA */
-.wa-confirm-btn {
-  width: 100%; padding: 15px; border: none;
-  background: #25d366; color: var(--white);
-  border-radius: 14px; font-family: 'Outfit', sans-serif;
-  font-size: 1rem; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all 0.2s; box-shadow: 0 4px 16px rgba(37,211,102,0.35);
-}
-.wa-confirm-btn:hover { background: #1cb858; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.45); }
-.wa-note { text-align: center; font-size: 0.78rem; color: var(--muted); margin-top: 8px; font-weight: 300; }
-
-/* ── Modal sukses + tombol buka WA ── */
-.success-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-  z-index: 300; display: none;
-  align-items: center; justify-content: center;
-  backdrop-filter: blur(4px);
-}
-.success-overlay.open { display: flex; }
-.success-box {
-  background: var(--white); border-radius: 24px;
-  padding: 2.5rem 2rem; text-align: center;
-  max-width: 400px; width: 90%;
-  animation: modalIn 0.3s ease;
-}
+.modal-overlay { position: fixed; inset: 0; background: rgba(17, 28, 36, 0.6); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-box { background: var(--white); border-radius: 24px; width: 100%; max-width: 420px; padding: 2.5rem; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.modal-close { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 1.5rem; color: var(--muted); cursor: pointer; }
+.modal-tabs { display: flex; border-bottom: 2px solid var(--green-light); margin-bottom: 2rem; }
+.modal-tab { flex: 1; text-align: center; padding: 10px; font-size: 0.95rem; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.modal-tab.active { color: var(--green); border-bottom-color: var(--green); }
+.modal-form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; position: relative; }
+.modal-form-group label { font-size: 0.8rem; font-weight: 600; color: var(--mid); }
+.modal-form-group input { padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; }
+.modal-form-group input:focus { border-color: var(--green); outline: none; }
+
+/* Input Password dengan Icon Mata */
+.password-wrapper { position: relative; display: flex; align-items: center; }
+.password-wrapper input { width: 100%; padding-right: 44px; }
+.eye-btn { position: absolute; right: 12px; background: none; border: none; font-size: 1.1rem; color: var(--muted); cursor: pointer; outline: none; padding: 4px; }
+
+.forgot-link { align-self: flex-end; font-size: 0.75rem; color: var(--green); font-weight: 600; text-decoration: none; margin-top: -8px; margin-bottom: 12px; cursor: pointer; display: block; text-align: right; }
+.modal-btn { width: 100%; background: var(--green); color: var(--white); border: none; padding: 14px; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+.modal-btn:hover { background: var(--green-mid); }
+.modal-divider { text-align: center; margin: 1.25rem 0; position: relative; }
+.modal-divider span { background: #fff; padding: 0 10px; font-size: 0.8rem; color: var(--muted); position: relative; z-index: 2; }
+.modal-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); z-index: 1; }
+
+/* Tombol Login Cepat */
+.modal-btn-secondary { width: 100%; background: #4a5560; color: var(--white); border: none; padding: 14px; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+.modal-btn-secondary:hover { background: #36404a; }
+
+/* Sukses Booking Modal Overlay */
+.success-overlay { position: fixed; inset: 0; background: rgba(17, 28, 36, 0.7); backdrop-filter: blur(6px); z-index: 300; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.success-overlay.open { opacity: 1; pointer-events: auto; }
+.success-box { background: var(--white); border-radius: 24px; padding: 3rem 2rem; text-align: center; max-width: 400px; width: 90%; }
 .success-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-.success-box h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem;
-}
+.success-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
 .success-box p { color: var(--muted); font-size: 0.875rem; font-weight: 300; line-height: 1.6; margin-bottom: 1.25rem; }
-.order-id {
-  background: var(--green-light); border-radius: 10px;
-  padding: 10px; font-size: 0.875rem; color: var(--green);
-  font-weight: 600; margin-bottom: 1.25rem;
-}
-.wa-open-btn {
-  display: block; width: 100%; padding: 14px;
-  background: #25d366; color: var(--white);
-  border-radius: 12px; font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem; font-weight: 700;
-  text-decoration: none; text-align: center; margin-bottom: 0;
-  transition: background 0.2s;
-}
-.wa-open-btn:hover { background: #1cb858; }
+.order-id { background: var(--green-light); border-radius: 10px; padding: 10px; font-size: 0.875rem; color: var(--green); font-weight: 600; margin-bottom: 1.25rem; }
+.wa-open-btn { display: block; width: 100%; padding: 14px; background: var(--wa-green); color: var(--white); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; text-decoration: none; text-align: center; transition: background 0.2s; border: none; cursor: pointer; }
+.wa-open-btn:hover { background: var(--wa-dark); }
 
-/* ── Tracking: daftar paket multi ── */
-.tr-pkg-list {
-  margin-top: 8px; display: flex; flex-direction: column; gap: 4px;
+/* ================================================================
+   TOAST NOTIFICATION SYSTEM (IN-PAGE ONLY)
+================================================================ */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
 }
-.tr-pkg-item {
-  background: rgba(255,255,255,0.15); border-radius: 6px;
-  padding: 4px 10px; font-size: 0.8rem; color: rgba(255,255,255,0.9);
-  display: flex; align-items: center; gap: 6px;
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 18px;
+  min-width: 280px;
+  max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--green);
+  pointer-events: auto;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-.tr-pkg-item::before { content: '•'; opacity: 0.6; }
+.toast.show { transform: translateX(0); opacity: 1; }
+.toast.hide { transform: translateX(120%); opacity: 0; transition: transform 0.35s ease-in, opacity 0.25s ease-in; }
+.toast.toast-success { border-left-color: #22c55e; }
+.toast.toast-error   { border-left-color: #ef4444; }
+.toast.toast-warning { border-left-color: #f59e0b; }
+.toast.toast-info    { border-left-color: var(--green); }
+.toast.toast-promo   { border-left-color: #8b5cf6; background: linear-gradient(135deg,#faf5ff,#fff); }
+.toast-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+.toast-content { flex: 1; }
+.toast-title { font-size: 0.875rem; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+.toast-msg { font-size: 0.8rem; color: var(--mid); line-height: 1.4; font-weight: 300; }
+.toast-close { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; line-height: 1; padding: 0; flex-shrink: 0; transition: color 0.2s; }
+.toast-close:hover { color: var(--dark); }
+.toast-progress { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--green); border-radius: 0 0 0 14px; animation: toastProgress 4s linear forwards; }
+.toast.toast-success .toast-progress { background: #22c55e; }
+.toast.toast-error   .toast-progress { background: #ef4444; }
+.toast.toast-warning .toast-progress { background: #f59e0b; }
+.toast.toast-promo   .toast-progress { background: #8b5cf6; }
+@keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
 
-/* ── Responsive booking baru ── */
-@media (max-width: 768px) {
-  .booking-cols  { grid-template-columns: 1fr; }
-  .booking-right { position: static; }
-  .form-row      { grid-template-columns: 1fr; }
+/* ================================================================
+   PROMO BANNER ENHANCED
+================================================================ */
+.promo-banner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.promo-text-area { flex: 1; min-width: 240px; }
+.promo-action-area { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.promo-badge-inline { display: inline-block; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); border-radius: 100px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; padding: 4px 12px; margin-bottom: 0.6rem; color: #fff; }
+.promo-discount-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.18); border: 1.5px dashed rgba(255,255,255,0.5); border-radius: 10px; padding: 8px 16px; margin-top: 10px; }
+.discount-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; color: rgba(255,255,255,0.8); text-transform: uppercase; }
+.discount-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; }
+.discount-note { font-size: 0.7rem; color: rgba(255,255,255,0.75); font-weight: 300; }
+.promo-cta-btn { background: #fff !important; color: var(--green) !important; font-weight: 700 !important; font-size: 1rem !important; padding: 14px 32px !important; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important; }
+.promo-cta-btn:hover { transform: translateY(-3px) scale(1.04) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important; background: #f0f8ff !important; }
+.promo-cta-btn.booking-mode { color: #0f7a3a !important; animation: promoPulse 2s ease-in-out infinite; }
+@keyframes promoPulse { 0%,100% { box-shadow: 0 4px 16px rgba(0,0,0,0.15); } 50% { box-shadow: 0 4px 24px rgba(255,255,255,0.4), 0 0 0 4px rgba(255,255,255,0.15); } }
+.promo-trust { font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 300; }
+
+/* ================================================================
+   ENHANCED INTERACTION EFFECTS
+================================================================ */
+.btn-primary, .btn-outline, .modal-btn, .nav-cta, .pkg-btn { position: relative; overflow: hidden; }
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
+.ripple-wave { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.35); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
+.feature-card { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease; }
+.feature-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 32px rgba(25,118,210,0.12); border-color: var(--green-mid); }
+.feat-icon { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.feature-card:hover .feat-icon { transform: scale(1.25) rotate(-5deg); }
+.stat-item:hover .stat-num { transform: scale(1.1); color: var(--green-mid); transition: transform 0.2s ease, color 0.2s ease; }
+.branch-item { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+.branch-item:hover { transform: translateX(6px); box-shadow: 0 4px 14px rgba(25,118,210,0.1); border-color: var(--green-mid); }
+.testi-card { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; }
+.testi-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(25,118,210,0.1); }
+.nav-links a { transition: color 0.2s, border-bottom-color 0.2s, transform 0.2s; }
+.nav-links a:hover { transform: translateY(-1px); }
+.page.active { animation: pageIn 0.4s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.hero h1 { animation: heroSlideIn 0.7s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+.hero p { animation: heroSlideIn 0.7s 0.1s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+.hero-btns { animation: heroSlideIn 0.7s 0.2s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+@keyframes heroSlideIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.promo-banner { animation: promoBannerIn 0.6s 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both; }
+@keyframes promoBannerIn { from { opacity: 0; transform: scale(0.97) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-overlay.open .modal-box { animation: modalBounceIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+@keyframes modalBounceIn { from { opacity: 0; transform: scale(0.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.success-overlay.open .success-box { animation: successPopIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+@keyframes successPopIn { from { opacity: 0; transform: scale(0.7) rotate(-3deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+.pkg-card-container { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.pkg-card-container:hover { transform: translateY(-4px); }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus,
+.modal-form-group input:focus { box-shadow: 0 0 0 3px rgba(25,118,210,0.12); border-color: var(--green); }
+.logout-btn { transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+.logout-btn:hover { transform: scale(1.05); }
+.new-user-promo-tag { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg,#e8f5e9,#f1f8e9); border: 1px solid #a5d6a7; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; color: #2e7d32; font-weight: 600; margin-bottom: 12px; animation: tagPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+@keyframes tagPop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+/* ================================================================
+   10. FOOTER PREMIUM
+================================================================ */
+footer {
+  background: #0d1b2a;
+  color: #c5d1dd;
+  padding: 4rem 2rem 2rem;
+  border-top: 2px solid #1565c0;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 3rem;
+}
+
+.footer-brand h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--white); margin-bottom: 1rem; }
+.footer-brand h3 span { color: #64b5f6; }
+.footer-brand p { font-size: 0.875rem; line-height: 1.6; color: #90a4ae; font-weight: 300; }
+
+.footer-title { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links li, .footer-links a { font-size: 0.875rem; color: #90a4ae; text-decoration: none; font-weight: 300; transition: color 0.2s; }
+.footer-links a:hover { color: #64b5f6; cursor: pointer; }
+
+.footer-bottom { max-width: 1100px; margin: 3rem auto 0; padding-top: 1.5rem; border-top: 1px solid #1565c0; text-align: center; font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+/* ================================================================
+   11. ABOUT / CABANG SECTION DI HOME
+================================================================ */
+.about-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 2rem;
+}
+.about-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.about-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+.about-text p { font-size: 0.9rem; color: var(--mid); line-height: 1.8; font-weight: 300; margin-bottom: 1rem; }
+.branch-list { display: flex; flex-direction: column; gap: 12px; }
+.branch-item {
+  background: var(--green-pale);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.branch-item .branch-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.branch-item strong { font-size: 0.9rem; color: var(--dark); display: block; }
+.branch-item span { font-size: 0.8rem; color: var(--muted); }
+.branch-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; }
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  .features-grid, .testimonials, .packages-grid, .footer-inner, .about-inner { grid-template-columns: 1fr; }
+  .booking-container { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid .form-group.full { grid-column: span 1; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
 }
